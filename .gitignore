@@ -1,0 +1,15 @@
+node_modules/
+.DS_Store
+__pycache__/
+*.pyc
+
+# Raw downloads & temporary page renderings
+downloads/*.pdf
+pages/*.png
+pages/*.json
+clips/*.png
+outputs/dashboard.html
+
+# Database locks/temporary files
+*.db-journal
+*.db-wal

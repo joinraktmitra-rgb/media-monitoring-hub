@@ -1,0 +1,1803 @@
+{
+  "catalog_version": 1,
+  "checked_on": "2026-11-15",
+  "publishers": [
+    {
+      "id": "first-india",
+      "name": "First India News",
+      "aliases": [
+        "First India",
+        "First India Jaipur"
+      ],
+      "language": "English/Hindi",
+      "portal": "https://firstindia.co.in/epapers/jaipur",
+      "official_hosts": [
+        "firstindia.co.in",
+        "storage.firstindia.co.in"
+      ],
+      "download": {
+        "mode": "page-discovery",
+        "edition_page_template": "https://firstindia.co.in/epapers/{edition}/{date}",
+        "url_date_format": "%d%m%Y",
+        "description": "Follow the visible Download PDF link from the selected public dated Jaipur edition page."
+      },
+      "editions": [
+        {
+          "id": "jaipur",
+          "name": "Jaipur",
+          "page_slug": "jaipur",
+          "portal": "https://firstindia.co.in/epapers/jaipur"
+        }
+      ],
+      "access_note": "A whole-edition PDF link was visible on the public Jaipur issue page for 15 Nov 2026. Jaipur is the only edition with a public PDF flow verified for v1; Lucknow availability was not confirmed.",
+      "source_urls": [
+        "https://firstindia.co.in/epapers/jaipur",
+        "https://firstindia.co.in/epapers/jaipur/15112026",
+        "https://storage.firstindia.co.in/public/epapers/November2026/179468039888.pdf",
+        "https://firstindia.co.in/pages/privacy-policy"
+      ]
+    },
+    {
+      "id": "the-pioneer",
+      "name": "The Pioneer",
+      "aliases": [
+        "Pioneer"
+      ],
+      "language": "English",
+      "portal": "https://epaper.dailypioneer.com/",
+      "official_hosts": [
+        "epaper.dailypioneer.com",
+        "dailypioneer.com",
+        "pioneer-epapers.338e462235adf3a96b63f99c7933125c.r2.cloudflarestorage.com"
+      ],
+      "download": {
+        "mode": "page-discovery",
+        "edition_page_template": "https://epaper.dailypioneer.com/{edition}/{date}",
+        "url_date_format": "%d-%m-%Y",
+        "public_page_pdf_rule": {
+          "control_id": "raw",
+          "query": "download=1",
+          "required_source_markers": [
+            "location.pathname + '.pdf'",
+            "download=1"
+          ]
+        },
+        "description": "Follow the visible Download PDF link from the selected official dated edition page."
+      },
+      "editions": [
+        {
+          "id": "delhi",
+          "name": "Delhi",
+          "page_slug": "delhi",
+          "portal": "https://epaper.dailypioneer.com/delhi"
+        },
+        {
+          "id": "lucknow",
+          "name": "Lucknow",
+          "page_slug": "lucknow",
+          "portal": "https://epaper.dailypioneer.com/lucknow"
+        }
+      ],
+      "access_note": "Delhi and Lucknow pages exposed public whole-edition PDFs in the sampled issues; the CLI checks the requested date live and stops if the publisher link is absent or gated.",
+      "source_urls": [
+        "https://epaper.dailypioneer.com/",
+        "https://epaper.dailypioneer.com/delhi/14-11-2026",
+        "https://epaper.dailypioneer.com/delhi/14-11-2026.pdf?download=1",
+        "https://epaper.dailypioneer.com/lucknow/14-11-2026"
+      ]
+    },
+    {
+      "id": "nava-telangana",
+      "name": "Nava Telangana",
+      "aliases": [
+        "Nava Telangana"
+      ],
+      "language": "Telugu",
+      "portal": "https://navatelangana.com/epaper",
+      "official_hosts": [
+        "navatelangana.com",
+        "admin.navatelangana.com"
+      ],
+      "download": {
+        "mode": "publisher-embedded-pdf",
+        "edition_page_template": "https://navatelangana.com/epaper/newspaper/{edition}/{date}",
+        "url_date_format": "%Y-%m-%d",
+        "pdf_path_prefix": "gen-epaper/",
+        "pdf_file_base": "https://admin.navatelangana.com/api/epaper-media/file/",
+        "description": "Read only the publisher's explicit full-issue pdfUrl from the public dated issue page; do not use the page-level image assets."
+      },
+      "editions": [
+        {
+          "id": "hyderabad-main",
+          "name": "Hyderabad Main",
+          "page_slug": "hyderabad-main-20",
+          "portal": "https://navatelangana.com/epaper/newspaper/hyderabad-main-20"
+        }
+      ],
+      "access_note": "A public complete-issue PDF was explicitly linked in the official Hyderabad Main dated issue page for 6 Nov 2026 and verified by application/pdf content type and the %PDF signature. Availability is date-specific; the CLI stops if the publisher does not expose the expected whole-issue field.",
+      "source_urls": [
+        "https://navatelangana.com/epaper",
+        "https://navatelangana.com/epaper/newspaper/hyderabad-main-20/2026-11-06",
+        "https://admin.navatelangana.com/api/epaper-media/file/gen-epaper/061120266ac356dc8c009b23e54d2b4f.pdf",
+        "https://navatelangana.com/"
+      ]
+    },
+    {
+      "id": "deshdoot",
+      "name": "Deshdoot",
+      "aliases": [
+        "Deshdoot E-Paper"
+      ],
+      "language": "Marathi/English",
+      "portal": "https://epaper.deshdoot.com/",
+      "official_hosts": [
+        "epaper.deshdoot.com"
+      ],
+      "download": {
+        "mode": "publisher-archive-pdf",
+        "archive_page_template": "https://epaper.deshdoot.com/archive/date/{date}?forcesingle=yes",
+        "archive_date_format": "%d-%b-%Y",
+        "issue_slug_date_format": "%d-%b-%Y",
+        "pdf_path_pattern": "/media/[0-9]{4}-[0-9]{2}/pan3-[0-9]+\\.pdf",
+        "visible_pdf_labels": [
+          "pdf"
+        ],
+        "minimum_page_count": 2,
+        "description": "Follow the official dated archive to the selected edition, then accept only its visible PDF link from a multi-page issue viewer."
+      },
+      "editions": [
+        {
+          "id": "nashik",
+          "name": "Nashik",
+          "archive_category_id": "13",
+          "portal": "https://epaper.deshdoot.com/epaper/default/open?id=13"
+        }
+      ],
+      "access_note": "The official dated archive linked a 14-page Nashik issue for 10 Nov 2026 to a visible PDF link. That publisher-hosted whole-issue PDF passed bounded application/pdf and %PDF checks with the dated viewer as its Referer. The CLI resolves the issue by archive date/category and stops if the expected full-issue link or multi-page viewer is absent.",
+      "source_urls": [
+        "https://epaper.deshdoot.com/",
+        "https://epaper.deshdoot.com/archive/date/10-Nov-2026?forcesingle=yes",
+        "https://epaper.deshdoot.com/view/5792/10-nov-2026",
+        "https://epaper.deshdoot.com/media/2026-11/pan3-10.pdf",
+        "https://deshdoot.com/"
+      ]
+    },
+    {
+      "id": "aajkaal-daily-gujarati",
+      "name": "Aajkaal Daily (Desh Pardesh Ni Aajkaal)",
+      "aliases": [
+        "Aajkaal Daily",
+        "Aajkaal Gujarati",
+        "Desh Pardesh Ni Aajkaal"
+      ],
+      "language": "Gujarati",
+      "portal": "https://epaper.aajkaaldaily.com/",
+      "official_hosts": [
+        "epaper.aajkaaldaily.com"
+      ],
+      "download": {
+        "mode": "publisher-date-selector-pdf",
+        "date_selector_template": "https://epaper.aajkaaldaily.com/date_picker/{date}/{edition}",
+        "category_input_id": "category_name",
+        "visible_date_format": "%d-%m-%Y",
+        "issue_link_path_pattern": "/epapers/[0-9]+",
+        "pdf_input_id": "url-input",
+        "required_pdfjs_markers": [
+          "pdfjsLib.getDocument(url)",
+          "pdfDoc.numPages"
+        ],
+        "pdf_path_pattern": "/pdf/[0-9]+\\.pdf",
+        "description": "Follow the publisher's date/city selector to one dated edition, then accept only its official PDF.js whole-issue URL field."
+      },
+      "editions": [
+        {
+          "id": "porbandar",
+          "name": "Porbandar",
+          "page_slug": "Porbandar",
+          "portal": "https://epaper.aajkaaldaily.com/Porbandar"
+        }
+      ],
+      "access_note": "The official date selector linked the Porbandar issue for 14 Nov 2026 to a PDF.js viewer embedding a publisher-hosted complete PDF. The issue displayed 8 pages, and the direct PDF passed bounded application/pdf and %PDF checks. The CLI currently enables only the verified Porbandar edition and stops if date, city, or viewer fields do not match.",
+      "source_urls": [
+        "https://epaper.aajkaaldaily.com/",
+        "https://epaper.aajkaaldaily.com/date_picker/2026-11-14/Porbandar",
+        "https://epaper.aajkaaldaily.com/epapers/7686",
+        "https://epaper.aajkaaldaily.com/pdf/1794655294.pdf",
+        "https://www.aajkaaldaily.com/"
+      ]
+    },
+    {
+      "id": "vaartha",
+      "name": "Vaartha",
+      "aliases": [
+        "Vaartha Telugu"
+      ],
+      "language": "Telugu",
+      "portal": "https://epaper.vaartha.com/",
+      "official_hosts": [
+        "epaper.vaartha.com"
+      ],
+      "download": {
+        "mode": "publisher-archive-pdf",
+        "archive_page_template": "https://epaper.vaartha.com/archive/date/{date}?forcesingle=yes",
+        "archive_pagination_template": "https://epaper.vaartha.com/archive/date/{date}/{page}?forcesingle=yes",
+        "archive_date_format": "%d-%b-%Y",
+        "archive_date_text_format": "%d %b %Y",
+        "archive_max_pages": 4,
+        "issue_page_path_pattern": "/view/[0-9]+/vaartha",
+        "issue_date_text_format": "%d %b %Y",
+        "pdf_path_pattern": "/media/[0-9]{4}-[0-9]{2}/[A-Za-z0-9-]+-ap-main\\.pdf",
+        "visible_pdf_labels": [
+          "pdf"
+        ],
+        "minimum_page_count": 2,
+        "description": "Follow the dated official archive across its pages to Andhra Pradesh Main, then accept only the visible whole-issue PDF link."
+      },
+      "editions": [
+        {
+          "id": "andhra-pradesh-main",
+          "name": "Andhra Pradesh Main",
+          "archive_category_id": "9",
+          "portal": "https://epaper.vaartha.com/epaper/default/open?id=9"
+        }
+      ],
+      "access_note": "The public 15 Nov 2026 Andhra Pradesh Main issue is listed on page 4 of the official dated archive, shows a 10-page viewer, and links a publisher-hosted complete PDF. A bounded request returned application/pdf and %PDF-1.6; the full issue was not saved.",
+      "source_urls": [
+        "https://epaper.vaartha.com/",
+        "https://epaper.vaartha.com/archive/date/15-Nov-2026?forcesingle=yes",
+        "https://epaper.vaartha.com/archive/date/15-Nov-2026/4?forcesingle=yes",
+        "https://epaper.vaartha.com/view/28329/vaartha",
+        "https://epaper.vaartha.com/media/2026-11/6af8c1846ab36-ap-main.pdf",
+        "https://epaper.vaartha.com/terms-and-conditions"
+      ]
+    },
+    {
+      "id": "sangbad-pratidin",
+      "name": "Sangbad Pratidin",
+      "aliases": [
+        "Sangbad Pratidin E-Paper"
+      ],
+      "language": "Bengali",
+      "portal": "https://epaper.sangbadpratidin.in/",
+      "official_hosts": [
+        "epaper.sangbadpratidin.in"
+      ],
+      "download": {
+        "mode": "publisher-date-route-pdf",
+        "date_selector_template": "https://epaper.sangbadpratidin.in/epaper/go/{date}/{category_id}",
+        "selector_date_format": "%d-%b-%Y",
+        "issue_slug_date_format": "sangbad-pratidin-%d-%m-%y",
+        "issue_page_path_pattern": "/epaper/edition/[0-9]+/sangbad-pratidin-[0-9]{2}-[0-9]{2}-[0-9]{2}",
+        "pdf_base": "https://epaper.sangbadpratidin.in/epaperpdf/epaper/",
+        "pdf_path_pattern": "/epaperpdf/epaper/[0-9]{4}-[0-9]{2}/[A-Za-z0-9_-]+\\.pdf",
+        "minimum_page_count": 2,
+        "description": "Follow the publisher's public Kolkata date route and derive only the whole-issue PDF named by its visible PDF control."
+      },
+      "editions": [
+        {
+          "id": "kolkata",
+          "name": "Kolkata",
+          "archive_category_id": "0",
+          "portal": "https://epaper.sangbadpratidin.in/epaper/go/15-Nov-2026/0"
+        }
+      ],
+      "access_note": "The 10 Nov 2026 Kolkata issue exposes a 10-page viewer and a publisher-generated complete PDF that passed bounded application/pdf and %PDF checks. The 15 Nov issue page resolved, but its linked PDF URL returned HTTP 404 at verification time; the CLI stops without saving anything when a requested file is unavailable.",
+      "source_urls": [
+        "https://epaper.sangbadpratidin.in/",
+        "https://epaper.sangbadpratidin.in/epaper/go/10-Nov-2026/0",
+        "https://epaper.sangbadpratidin.in/epaper/edition/4759/sangbad-pratidin-10-11-26",
+        "https://epaper.sangbadpratidin.in/epaperpdf/epaper/2026-11/6af2188b4c395.pdf",
+        "https://epaper.sangbadpratidin.in/epaper/go/15-Nov-2026/0"
+      ]
+    },
+    {
+      "id": "orissa-post",
+      "name": "Orissa POST",
+      "aliases": [
+        "OrissaPost",
+        "Orissa Post"
+      ],
+      "language": "English",
+      "portal": "https://odishapostepaper.com/epaper",
+      "official_hosts": [
+        "odishapostepaper.com",
+        "orissapost.com"
+      ],
+      "download": {
+        "mode": "portal",
+        "description": "A complete-publication PDF was verified in the archive, but the current visible Download control returned a single JPEG page; no safe whole-edition auto-route is enabled."
+      },
+      "editions": [
+        {
+          "id": "orissapost",
+          "name": "OrissaPOST daily",
+          "portal": "https://odishapostepaper.com/epaper"
+        },
+        {
+          "id": "sundaypost",
+          "name": "SundayPOST weekly supplement",
+          "portal": "https://odishapostepaper.com/category/11/sundaypost"
+        }
+      ],
+      "access_note": "The archive exposes dated issues and says complete editions are online. The visible Download endpoint checked for 8 Nov 2026 returned image/jpeg (one page), not a whole-edition PDF; use the portal manually unless a direct whole-paper PDF is explicitly linked.",
+      "source_urls": [
+        "https://odishapostepaper.com/epaper",
+        "https://odishapostepaper.com/edition/5948/orissapost",
+        "https://odishapostepaper.com/epaper/default/downloadpage/id/82345",
+        "https://odishapostepaper.com/category/11/sundaypost",
+        "https://odishapostepaper.com/page/1/about-us"
+      ]
+    },
+    {
+      "id": "the-hindu",
+      "name": "The Hindu",
+      "aliases": [
+        "Hindu"
+      ],
+      "language": "English",
+      "portal": "https://epaper.thehindu.com/reader",
+      "official_hosts": [
+        "thehindu.com"
+      ],
+      "download": {
+        "mode": "portal",
+        "description": "Full editions require subscriber access or the publisher's app offline feature; no unauthenticated web PDF was verified."
+      },
+      "editions": [
+        {
+          "id": "bengaluru",
+          "name": "Bengaluru"
+        },
+        {
+          "id": "chennai",
+          "name": "Chennai"
+        },
+        {
+          "id": "delhi",
+          "name": "Delhi"
+        },
+        {
+          "id": "kolkata",
+          "name": "Kolkata"
+        },
+        {
+          "id": "mumbai",
+          "name": "Mumbai"
+        }
+      ],
+      "access_note": "Official portal offers a limited free preview; complete e-paper editions are subscriber/app content. Use the publisher's own reader controls after sign-in; this CLI does not automate accounts.",
+      "source_urls": [
+        "https://epaper.thehindu.com/reader",
+        "https://epaper.thehindu.com/faq",
+        "https://epaper.thehindu.com/subscribe",
+        "https://www.thehindu.com/news/national/the-hindu-launches-international-epaper-edition-offering-a-window-to-india-and-the-world/article67030593.ece",
+        "https://play.google.com/store/apps/details?id=com.epaper.thehindu.android"
+      ]
+    },
+    {
+      "id": "times-of-india",
+      "name": "The Times of India",
+      "aliases": [
+        "TOI",
+        "Times of India"
+      ],
+      "language": "English",
+      "portal": "https://epaper.indiatimes.com/",
+      "official_hosts": [
+        "indiatimes.com",
+        "timesofindia.indiatimes.com"
+      ],
+      "download": {
+        "mode": "portal",
+        "description": "PDF/Print View is advertised, but the public page showed a time-limited preview and subscription requirement; no unauthenticated whole-edition file was verified."
+      },
+      "editions": [
+        {
+          "id": "delhi",
+          "name": "Delhi"
+        },
+        {
+          "id": "mumbai",
+          "name": "Mumbai"
+        },
+        {
+          "id": "bengaluru",
+          "name": "Bengaluru"
+        },
+        {
+          "id": "chennai",
+          "name": "Chennai"
+        },
+        {
+          "id": "kolkata",
+          "name": "Kolkata"
+        },
+        {
+          "id": "ahmedabad",
+          "name": "Ahmedabad"
+        }
+      ],
+      "access_note": "A public preview is available; full e-paper access is subscription-gated. This CLI only opens the official portal and will not fetch protected reader content.",
+      "source_urls": [
+        "https://epaper.indiatimes.com/",
+        "https://epaper.indiatimes.com/timesepaper/publication-the-times-of-india,city-delhi.cms",
+        "https://epaper.timesgroup.com/",
+        "https://buy.indiatimes.com/TOI/plans/"
+      ]
+    },
+    {
+      "id": "indian-express",
+      "name": "The Indian Express",
+      "aliases": [
+        "Indian Express"
+      ],
+      "language": "English",
+      "portal": "https://epaper.indianexpress.com/",
+      "official_hosts": [
+        "indianexpress.com"
+      ],
+      "download": {
+        "mode": "portal",
+        "description": "A Download PDF control is present in subscriber readers, but a public direct PDF was not verified; the sample content was purchase/login gated."
+      },
+      "editions": [
+        {
+          "id": "delhi",
+          "name": "Delhi"
+        },
+        {
+          "id": "mumbai",
+          "name": "Mumbai"
+        },
+        {
+          "id": "kolkata",
+          "name": "Kolkata"
+        },
+        {
+          "id": "pune",
+          "name": "Pune"
+        },
+        {
+          "id": "chandigarh",
+          "name": "Chandigarh"
+        }
+      ],
+      "access_note": "The official reader exposes Download PDF after entitlement checks; sign-in/purchase may be required. Use the publisher's browser flow for any authorized copy.",
+      "source_urls": [
+        "https://epaper.indianexpress.com/",
+        "https://epaper.indianexpress.com/t/226/latest",
+        "https://indianexpress.com/subscribe/",
+        "https://indianexpress.com/express-plus/epaper/?pageCode=165"
+      ]
+    },
+    {
+      "id": "hindustan-times",
+      "name": "Hindustan Times",
+      "aliases": [
+        "HT"
+      ],
+      "language": "English",
+      "portal": "https://epaper.hindustantimes.com/",
+      "official_hosts": [
+        "hindustantimes.com"
+      ],
+      "download": {
+        "mode": "portal",
+        "description": "The publisher documents a complete-edition download for active subscribers; no public anonymous PDF was verified."
+      },
+      "editions": [
+        {
+          "id": "delhi",
+          "name": "Delhi",
+          "portal": "https://epaper.hindustantimes.com/edition/delhi"
+        },
+        {
+          "id": "lucknow",
+          "name": "Lucknow",
+          "portal": "https://epaper.hindustantimes.com/edition/lucknow"
+        },
+        {
+          "id": "chandigarh",
+          "name": "Chandigarh",
+          "portal": "https://epaper.hindustantimes.com/edition/chandigarh"
+        },
+        {
+          "id": "bengaluru",
+          "name": "Bengaluru",
+          "portal": "https://epaper.hindustantimes.com/edition/bengaluru"
+        }
+      ],
+      "access_note": "Full edition download is subscription-gated and requires signing in with the subscribed email; the CLI opens the official portal only.",
+      "source_urls": [
+        "https://epaper.hindustantimes.com/",
+        "https://epaper.hindustantimes.com/edition/delhi",
+        "https://epaper.hindustantimes.com/edition/lucknow",
+        "https://www.hindustantimes.com/subscriber-agreement-and-terms-of-use/"
+      ]
+    },
+    {
+      "id": "dainik-jagran",
+      "name": "Dainik Jagran",
+      "aliases": [
+        "Jagran"
+      ],
+      "language": "Hindi",
+      "portal": "https://epaper.jagran.com/",
+      "official_hosts": [
+        "jagran.com"
+      ],
+      "download": {
+        "mode": "portal",
+        "description": "The public portal exposes edition/viewer pages but no whole-edition PDF link; paid e-paper access/login may be required."
+      },
+      "editions": [
+        {
+          "id": "lucknow",
+          "name": "Lucknow"
+        },
+        {
+          "id": "delhi-city",
+          "name": "Delhi City"
+        },
+        {
+          "id": "patna",
+          "name": "Patna"
+        },
+        {
+          "id": "varanasi-city",
+          "name": "Varanasi City"
+        }
+      ],
+      "access_note": "Use the official portal's dynamic location selector. No unauthenticated whole-edition PDF or public download button was verified.",
+      "source_urls": [
+        "https://epaper.jagran.com/",
+        "https://epaper.jagran.com/epaper/",
+        "https://epaper.jagran.com/edition-today-lucknow-11.html",
+        "https://epaper.jagran.com/subscription/plan",
+        "https://epaper.jagran.com/subscription-policy"
+      ]
+    },
+    {
+      "id": "dainik-bhaskar",
+      "name": "Dainik Bhaskar",
+      "aliases": [
+        "Bhaskar"
+      ],
+      "language": "Hindi",
+      "portal": "https://epaper.bhaskar.com/",
+      "official_hosts": [
+        "bhaskar.com"
+      ],
+      "download": {
+        "mode": "portal",
+        "description": "The tested edition required account verification/login; no unauthenticated whole-edition PDF was verified."
+      },
+      "editions": [
+        {
+          "id": "jaipur",
+          "name": "Jaipur"
+        },
+        {
+          "id": "indore",
+          "name": "Indore"
+        },
+        {
+          "id": "bhopal",
+          "name": "Bhopal"
+        },
+        {
+          "id": "raipur",
+          "name": "Raipur"
+        }
+      ],
+      "access_note": "Portal coverage and dates vary by city; a login or subscription may be required. Use the publisher's own interface.",
+      "source_urls": [
+        "https://epaper.bhaskar.com/",
+        "https://epaper.bhaskar.com/state/rajasthan",
+        "https://epaper.bhaskar.com/state/madhya-pradesh",
+        "https://www.bhaskar.com/terms-and-conditions"
+      ]
+    },
+    {
+      "id": "anandabazar-patrika",
+      "name": "Anandabazar Patrika",
+      "aliases": [
+        "Anandabazar",
+        "ABP Patrika"
+      ],
+      "language": "Bengali",
+      "portal": "https://epaper.anandabazar.com/",
+      "official_hosts": [
+        "anandabazar.com"
+      ],
+      "download": {
+        "mode": "portal",
+        "description": "E-paper access is subscription-gated; no public whole-edition PDF was verified."
+      },
+      "editions": [
+        {
+          "id": "kolkata",
+          "name": "Kolkata"
+        },
+        {
+          "id": "howrah-hooghly",
+          "name": "Howrah-Hooghly"
+        },
+        {
+          "id": "nadia",
+          "name": "Nadia"
+        }
+      ],
+      "access_note": "The official preview and subscription pages indicate subscriber access; use the publisher's browser reader and its own controls.",
+      "source_urls": [
+        "https://epaper.anandabazar.com/",
+        "https://epaper.anandabazar.com/preview",
+        "https://www.anandabazar.com/subscription",
+        "https://www.anandabazar.com/subscription/faq",
+        "https://www.anandabazar.com/termsofuse"
+      ]
+    },
+    {
+      "id": "rising-kashmir",
+      "name": "Rising Kashmir",
+      "aliases": [
+        "Rising Kashmir ePaper"
+      ],
+      "language": "English",
+      "portal": "https://epaper.risingkashmir.com/",
+      "official_hosts": [
+        "epaper.risingkashmir.com"
+      ],
+      "download": {
+        "mode": "publisher-fixed-issue-pdf",
+        "verified_issue_date": "2026-11-14",
+        "issue_page_url": "https://epaper.risingkashmir.com/?products/detail/92192466859",
+        "pdf_url": "https://epaper.risingkashmir.com/index.php?route=%2Fpublic%2Feditions%2F0ef5774b510bbd6b6f0d1da7babe0d93%2Fpdf&tenant_host=epaper.risingkashmir.com",
+        "required_issue_markers": [
+          "Rising Kashmir",
+          "14 November 2026"
+        ],
+        "pdf_route_pattern": "/public/editions/0ef5774b510bbd6b6f0d1da7babe0d93/pdf",
+        "description": "Use only the public whole-issue PDF route generated by the official viewer for the verified 14 Nov 2026 issue; all other dates fail closed."
+      },
+      "editions": [
+        {
+          "id": "srinagar",
+          "name": "Srinagar Edition",
+          "portal": "https://epaper.risingkashmir.com/?products/detail/92192466859"
+        }
+      ],
+      "access_note": "The official 14 Nov 2026 viewer exposes 12 pages and a public Download PDF control. The CLI supports only this verified date and refuses other dates. The publisher server ignored a byte-range check; no issue file is retained in the project.",
+      "source_urls": [
+        "https://risingkashmir.com/",
+        "https://epaper.risingkashmir.com/",
+        "https://epaper.risingkashmir.com/?products/detail/92192466859",
+        "https://epaper.risingkashmir.com/index.php?route=%2Fpublic%2Feditions%2F0ef5774b510bbd6b6f0d1da7babe0d93%2Fpdf&tenant_host=epaper.risingkashmir.com"
+      ]
+    },
+    {
+      "id": "desh-sewak",
+      "name": "Desh Sewak",
+      "aliases": [
+        "Deshsewak",
+        "Desh Sewak E-Paper"
+      ],
+      "language": "Punjabi",
+      "portal": "https://epaper.deshsewak.org/",
+      "official_hosts": [
+        "epaper.deshsewak.org"
+      ],
+      "download": {
+        "mode": "publisher-fixed-visible-pdf",
+        "verified_issue_date": "2026-11-11",
+        "issue_page_url": "https://epaper.deshsewak.org/view/453/11-november/1",
+        "required_issue_markers": [
+          "Desh Sewak - 11 Nov 2026 - Page 1"
+        ],
+        "page_link_path_pattern": "/view/453/11-november/([1-9][0-9]*)",
+        "minimum_page_count": 12,
+        "visible_button_class": "btn-pdfdownload",
+        "visible_button_label": "pdf",
+        "pdf_path_pattern": "/media/2026-11/1-to-126\\.pdf",
+        "description": "Use only the verified 11 Nov 2026 complete issue. The dated official page must expose 12 pages and its visible PDF button; other dates fail closed."
+      },
+      "editions": [
+        {
+          "id": "daily",
+          "name": "Daily Edition"
+        }
+      ],
+      "access_note": "The official 11 Nov 2026 page exposes a 12-page reader and a visible PDF control without an account or payment gate. The CLI supports only this date.",
+      "source_urls": [
+        "https://www.deshsewak.org/",
+        "https://epaper.deshsewak.org/",
+        "https://epaper.deshsewak.org/view/453/11-november/1",
+        "https://epaper.deshsewak.org/media/2026-11/1-to-126.pdf"
+      ]
+    },
+    {
+      "id": "millennium-post",
+      "name": "Millennium Post",
+      "aliases": [
+        "MillenniumPost"
+      ],
+      "language": "English",
+      "portal": "https://www.millenniumpost.in/epaper/",
+      "official_hosts": [
+        "www.millenniumpost.in"
+      ],
+      "download": {
+        "mode": "browser-manual",
+        "verified_issue_date": "2026-11-15",
+        "verified_page_count": 14,
+        "description": "Open the official dated Delhi issue and click Download Full Edition. Verified browser download: 14-page PDF, 15493607 bytes. This JavaScript control uses an anonymous session-specific route; no session is copied into this CLI."
+      },
+      "editions": [
+        {
+          "id": "delhi",
+          "name": "Delhi Edition — verified 15 Nov 2026",
+          "portal": "https://www.millenniumpost.in/full-page-pdf/epaper/pdf/delhi/2026/11/15/delhi-15-november-2026/11214"
+        }
+      ],
+      "access_note": "Complete issue downloaded using the official Download Full Edition browser control, without account or payment. Use 'open millennium-post --edition delhi'; automatic CLI downloading is not implemented for this session-specific JavaScript flow.",
+      "source_urls": [
+        "https://www.millenniumpost.in/",
+        "https://www.millenniumpost.in/epaper/",
+        "https://www.millenniumpost.in/full-page-pdf/epaper/pdf/delhi/2026/11/15/delhi-15-november-2026/11214",
+        "https://www.millenniumpost.in/scripts/pdfviewerjsV2.min.336be232.js"
+      ]
+    },
+    {
+      "id": "eenadu",
+      "name": "Eenadu",
+      "aliases": [
+        "Eenadu E-Paper"
+      ],
+      "language": "Telugu",
+      "portal": "https://epaper.eenadu.net/",
+      "official_hosts": [
+        "epaper.eenadu.net",
+        "eenadu.net"
+      ],
+      "download": {
+        "mode": "portal",
+        "description": "Official e-paper portal only; the city/district selector is dynamic and no unauthenticated complete-issue PDF route was verified."
+      },
+      "editions": [
+        {
+          "id": "adilabad",
+          "name": "Adilabad",
+          "portal": "https://epaper.eenadu.net/"
+        },
+        {
+          "id": "bhadradri-kothagudem",
+          "name": "Bhadradri Kothagudem",
+          "portal": "https://epaper.eenadu.net/"
+        },
+        {
+          "id": "cyberabad",
+          "name": "Cyberabad",
+          "portal": "https://epaper.eenadu.net/"
+        },
+        {
+          "id": "hanumakonda",
+          "name": "Hanumakonda",
+          "portal": "https://epaper.eenadu.net/"
+        },
+        {
+          "id": "hyderabad",
+          "name": "Hyderabad",
+          "portal": "https://epaper.eenadu.net/"
+        },
+        {
+          "id": "jagtial",
+          "name": "Jagtial",
+          "portal": "https://epaper.eenadu.net/"
+        },
+        {
+          "id": "jangaon",
+          "name": "Jangaon",
+          "portal": "https://epaper.eenadu.net/"
+        },
+        {
+          "id": "jayashankar-bhupalpally",
+          "name": "Jayashankar Bhupalpally",
+          "portal": "https://epaper.eenadu.net/"
+        },
+        {
+          "id": "jogulamba-gadwal",
+          "name": "Jogulamba Gadwal",
+          "portal": "https://epaper.eenadu.net/"
+        },
+        {
+          "id": "kamareddy",
+          "name": "Kamareddy",
+          "portal": "https://epaper.eenadu.net/"
+        },
+        {
+          "id": "karimnagar",
+          "name": "Karimnagar",
+          "portal": "https://epaper.eenadu.net/"
+        },
+        {
+          "id": "khammam",
+          "name": "Khammam",
+          "portal": "https://epaper.eenadu.net/"
+        }
+      ],
+      "access_note": "The official portal lists district editions in a dynamic selector, including the 12 districts/city editions recorded here. No free public complete-issue PDF route was verified; open the publisher portal and use its own reader.",
+      "source_urls": [
+        "https://epaper.eenadu.net/",
+        "https://epaper.eenadu.net/home/index",
+        "https://www.eenadu.net/"
+      ]
+    },
+    {
+      "id": "mathrubhumi",
+      "name": "Mathrubhumi",
+      "aliases": [
+        "Mathrubhumi E-Paper"
+      ],
+      "language": "Malayalam",
+      "portal": "https://epaper.mathrubhumi.com/",
+      "official_hosts": [
+        "epaper.mathrubhumi.com",
+        "mathrubhumi.com"
+      ],
+      "download": {
+        "mode": "portal",
+        "description": "Official e-paper portal only; registration/subscription access is indicated and no unauthenticated complete-issue PDF route was verified."
+      },
+      "editions": [
+        {
+          "id": "trivandrum",
+          "name": "Trivandrum",
+          "aliases": [
+            "Thiruvananthapuram"
+          ],
+          "portal": "https://epaper.mathrubhumi.com/"
+        },
+        {
+          "id": "kollam",
+          "name": "Kollam",
+          "portal": "https://epaper.mathrubhumi.com/"
+        },
+        {
+          "id": "pathanamthitta",
+          "name": "Pathanamthitta",
+          "portal": "https://epaper.mathrubhumi.com/"
+        },
+        {
+          "id": "alappuzha",
+          "name": "Alappuzha",
+          "portal": "https://epaper.mathrubhumi.com/"
+        },
+        {
+          "id": "kottayam",
+          "name": "Kottayam",
+          "portal": "https://epaper.mathrubhumi.com/"
+        },
+        {
+          "id": "idukki",
+          "name": "Idukki",
+          "portal": "https://epaper.mathrubhumi.com/"
+        },
+        {
+          "id": "ernakulam",
+          "name": "Ernakulam",
+          "aliases": [
+            "Kochi"
+          ],
+          "portal": "https://epaper.mathrubhumi.com/"
+        },
+        {
+          "id": "thrissur",
+          "name": "Thrissur",
+          "portal": "https://epaper.mathrubhumi.com/"
+        },
+        {
+          "id": "palakkad",
+          "name": "Palakkad",
+          "portal": "https://epaper.mathrubhumi.com/"
+        },
+        {
+          "id": "malappuram",
+          "name": "Malappuram",
+          "portal": "https://epaper.mathrubhumi.com/"
+        },
+        {
+          "id": "kozhikode",
+          "name": "Kozhikode",
+          "aliases": [
+            "Calicut"
+          ],
+          "portal": "https://epaper.mathrubhumi.com/"
+        },
+        {
+          "id": "wayanad",
+          "name": "Wayanad",
+          "portal": "https://epaper.mathrubhumi.com/"
+        }
+      ],
+      "access_note": "The official edition selector explicitly lists these 12 Kerala editions. The publisher’s FAQ indicates registration/subscription access; no free public complete-issue PDF route was verified. Use the official portal and its reader controls.",
+      "source_urls": [
+        "https://epaper.mathrubhumi.com/",
+        "https://epaper.mathrubhumi.com/Home/Welcome",
+        "https://epaper.mathrubhumi.com/Home/faq",
+        "https://epaper.mathrubhumi.com/Home/GetEditionList",
+        "https://www.mathrubhumi.com/"
+      ]
+    },
+    {
+      "id": "lokmat",
+      "name": "Lokmat",
+      "aliases": [
+        "Lokmat E-Paper"
+      ],
+      "language": "Marathi",
+      "portal": "https://epaper.lokmat.com/",
+      "official_hosts": [
+        "epaper.lokmat.com",
+        "lokmat.com"
+      ],
+      "download": {
+        "mode": "portal",
+        "description": "Official e-paper portal only; no unauthenticated complete-issue PDF route was verified."
+      },
+      "editions": [
+        {
+          "id": "mumbai",
+          "name": "Mumbai",
+          "portal": "https://epaper.lokmat.com/main-editions/Mumbai%20Main/-1/1"
+        },
+        {
+          "id": "ahilyanagar",
+          "name": "Ahilyanagar",
+          "portal": "https://epaper.lokmat.com/main-editions/Ahilyanagar%20Main/-1/1"
+        },
+        {
+          "id": "akola",
+          "name": "Akola",
+          "portal": "https://epaper.lokmat.com/main-editions/Akola%20Main/-1/1"
+        },
+        {
+          "id": "aurangabad",
+          "name": "Aurangabad",
+          "aliases": [
+            "Chhatrapati Sambhajinagar"
+          ],
+          "portal": "https://epaper.lokmat.com/main-editions/Aurangabad%20Main/-1/1"
+        },
+        {
+          "id": "goa",
+          "name": "Goa",
+          "portal": "https://epaper.lokmat.com/main-editions/Goa%20Main/-1/1"
+        },
+        {
+          "id": "jalgaon",
+          "name": "Jalgaon",
+          "portal": "https://epaper.lokmat.com/main-editions/Jalgaon%20Main/-1/1"
+        },
+        {
+          "id": "kolhapur",
+          "name": "Kolhapur",
+          "portal": "https://epaper.lokmat.com/main-editions/Kolhapur%20Main/-1/1"
+        },
+        {
+          "id": "nagpur",
+          "name": "Nagpur",
+          "portal": "https://epaper.lokmat.com/main-editions/Nagpur%20Main/-1/1"
+        },
+        {
+          "id": "nashik",
+          "name": "Nashik",
+          "portal": "https://epaper.lokmat.com/main-editions/Nashik%20Main/-1/1"
+        },
+        {
+          "id": "pune",
+          "name": "Pune",
+          "portal": "https://epaper.lokmat.com/main-editions/Pune%20Main/-1/1"
+        },
+        {
+          "id": "solapur",
+          "name": "Solapur",
+          "portal": "https://epaper.lokmat.com/main-editions/Solapur%20Main/-1/1"
+        }
+      ],
+      "access_note": "The official portal’s Main Editions selector lists these 11 regional editions, with direct official edition pages. No unauthenticated complete-issue PDF route was verified; use the official e-paper reader.",
+      "source_urls": [
+        "https://epaper.lokmat.com/",
+        "https://epaper.lokmat.com/main-editions/",
+        "https://epaper.lokmat.com/main-editions/Mumbai%20Main/-1/1",
+        "https://epaper.lokmat.com/main-editions/Ahilyanagar%20Main/-1/1",
+        "https://epaper.lokmat.com/main-editions/Akola%20Main/-1/1",
+        "https://epaper.lokmat.com/main-editions/Aurangabad%20Main/-1/1",
+        "https://epaper.lokmat.com/main-editions/Goa%20Main/-1/1",
+        "https://epaper.lokmat.com/main-editions/Jalgaon%20Main/-1/1",
+        "https://epaper.lokmat.com/main-editions/Kolhapur%20Main/-1/1",
+        "https://epaper.lokmat.com/main-editions/Nagpur%20Main/-1/1",
+        "https://epaper.lokmat.com/main-editions/Nashik%20Main/-1/1",
+        "https://epaper.lokmat.com/main-editions/Pune%20Main/-1/1",
+        "https://epaper.lokmat.com/main-editions/Solapur%20Main/-1/1",
+        "https://www.lokmat.com/"
+      ]
+    },
+    {
+      "id": "dinamalar",
+      "name": "Dinamalar",
+      "aliases": [
+        "Dinamalar E-Paper",
+        "Dinamalar iPaper"
+      ],
+      "language": "Tamil",
+      "portal": "https://ipaper.dinamalar.com/",
+      "official_hosts": [
+        "ipaper.dinamalar.com",
+        "dinamalar.com"
+      ],
+      "download": {
+        "mode": "portal",
+        "description": "Official iPaper portal only; the publisher advertises a paid digital edition and no unauthenticated complete-issue PDF route was verified."
+      },
+      "editions": [
+        {
+          "id": "chennai",
+          "name": "Chennai",
+          "aliases": [
+            "சென்னை"
+          ],
+          "portal": "https://ipaper.dinamalar.com/"
+        },
+        {
+          "id": "madurai",
+          "name": "Madurai",
+          "aliases": [
+            "மதுரை"
+          ],
+          "portal": "https://ipaper.dinamalar.com/"
+        },
+        {
+          "id": "coimbatore",
+          "name": "Coimbatore",
+          "aliases": [
+            "கோயம்புத்தூர்"
+          ],
+          "portal": "https://ipaper.dinamalar.com/"
+        },
+        {
+          "id": "puducherry",
+          "name": "Puducherry",
+          "aliases": [
+            "புதுச்சேரி"
+          ],
+          "portal": "https://ipaper.dinamalar.com/"
+        },
+        {
+          "id": "tirunelveli",
+          "name": "Tirunelveli",
+          "aliases": [
+            "திருநெல்வேலி"
+          ],
+          "portal": "https://ipaper.dinamalar.com/"
+        },
+        {
+          "id": "nagercoil",
+          "name": "Nagercoil",
+          "aliases": [
+            "நாகர்கோவில்"
+          ],
+          "portal": "https://ipaper.dinamalar.com/"
+        }
+      ],
+      "access_note": "The official iPaper portal visibly lists these six city options. Its official subscription page advertises paid digital access; no free public complete-issue PDF route was verified. Use the official portal only.",
+      "source_urls": [
+        "https://www.dinamalar.com/",
+        "https://ipaper.dinamalar.com/",
+        "https://subscription.dinamalar.com/",
+        "https://www.dinamalar.com/dinamalar-publications"
+      ]
+    },
+    {
+      "id": "gujarat-samachar",
+      "name": "Gujarat Samachar",
+      "aliases": [
+        "Gujarat Samachar E-Paper"
+      ],
+      "language": "Gujarati",
+      "portal": "https://epaper.gujaratsamachar.com/",
+      "official_hosts": [
+        "epaper.gujaratsamachar.com",
+        "gujaratsamachar.com"
+      ],
+      "download": {
+        "mode": "portal",
+        "description": "Official e-paper portal only; the portal indicates login is required to read further pages and no unauthenticated complete-issue PDF route was verified."
+      },
+      "editions": [
+        {
+          "id": "ahmedabad",
+          "name": "Ahmedabad",
+          "portal": "https://epaper.gujaratsamachar.com/"
+        },
+        {
+          "id": "ahmedabad-east",
+          "name": "Ahmedabad East",
+          "portal": "https://epaper.gujaratsamachar.com/"
+        },
+        {
+          "id": "mumbai",
+          "name": "Mumbai",
+          "portal": "https://epaper.gujaratsamachar.com/"
+        },
+        {
+          "id": "baroda",
+          "name": "Baroda",
+          "aliases": [
+            "Vadodara"
+          ],
+          "portal": "https://epaper.gujaratsamachar.com/"
+        },
+        {
+          "id": "surat",
+          "name": "Surat",
+          "portal": "https://epaper.gujaratsamachar.com/"
+        },
+        {
+          "id": "rajkot-saurashtra",
+          "name": "Rajkot Saurashtra",
+          "portal": "https://epaper.gujaratsamachar.com/"
+        },
+        {
+          "id": "bhavnagar",
+          "name": "Bhavnagar",
+          "portal": "https://epaper.gujaratsamachar.com/"
+        },
+        {
+          "id": "bhuj",
+          "name": "Bhuj",
+          "portal": "https://epaper.gujaratsamachar.com/"
+        },
+        {
+          "id": "rajkot-city",
+          "name": "Rajkot City",
+          "portal": "https://epaper.gujaratsamachar.com/"
+        },
+        {
+          "id": "kheda-anand",
+          "name": "Kheda Anand",
+          "portal": "https://epaper.gujaratsamachar.com/"
+        },
+        {
+          "id": "gandhinagar",
+          "name": "Gandhinagar",
+          "portal": "https://epaper.gujaratsamachar.com/"
+        },
+        {
+          "id": "mehsana",
+          "name": "Mehsana",
+          "portal": "https://epaper.gujaratsamachar.com/"
+        }
+      ],
+      "access_note": "The official selector visibly lists these 12 Main and District editions. The portal indicates login is required to read more pages; no unauthenticated complete-issue PDF route was verified.",
+      "source_urls": [
+        "https://epaper.gujaratsamachar.com/",
+        "https://www.gujaratsamachar.com/"
+      ]
+    },
+    {
+      "id": "the-tribune",
+      "name": "The Tribune",
+      "aliases": [
+        "Tribune E-Paper"
+      ],
+      "language": "English/Punjabi",
+      "portal": "https://epaper.tribuneindia.com/",
+      "official_hosts": [
+        "epaper.tribuneindia.com",
+        "tribuneindia.com",
+        "epaper.punjabitribuneonline.com",
+        "punjabitribuneonline.com"
+      ],
+      "download": {
+        "mode": "portal",
+        "description": "Official English and Punjabi e-paper portals only; the reader indicates sign-in/subscription access and no unauthenticated complete-issue PDF route was verified."
+      },
+      "editions": [
+        {
+          "id": "the-tribune",
+          "name": "The Tribune",
+          "portal": "https://epaper.tribuneindia.com/t/106"
+        },
+        {
+          "id": "haryana",
+          "name": "Haryana Edition",
+          "portal": "https://epaper.tribuneindia.com/t/780"
+        },
+        {
+          "id": "himachal",
+          "name": "Himachal Edition",
+          "portal": "https://epaper.tribuneindia.com/t/687"
+        },
+        {
+          "id": "delhi",
+          "name": "Delhi Edition",
+          "portal": "https://epaper.tribuneindia.com/t/690"
+        },
+        {
+          "id": "bathinda",
+          "name": "Bathinda Edition",
+          "portal": "https://epaper.tribuneindia.com/t/684"
+        },
+        {
+          "id": "jalandhar",
+          "name": "Jalandhar Edition",
+          "portal": "https://epaper.tribuneindia.com/t/702"
+        },
+        {
+          "id": "chandigarh-tribune",
+          "name": "Chandigarh Tribune",
+          "portal": "https://epaper.tribuneindia.com/t/299"
+        },
+        {
+          "id": "punjabi-tribune",
+          "name": "Punjabi Tribune",
+          "portal": "https://epaper.punjabitribuneonline.com/t/105"
+        },
+        {
+          "id": "punjabi-tribune-ludhiana",
+          "name": "Punjabi Tribune (Ludhiana)",
+          "portal": "https://epaper.punjabitribuneonline.com/t/6111"
+        },
+        {
+          "id": "punjabi-tribune-majha-doaba",
+          "name": "Punjabi Tribune (Majha/Doaba)",
+          "portal": "https://epaper.punjabitribuneonline.com/t/6110"
+        },
+        {
+          "id": "punjabi-tribune-patiala-sangrur",
+          "name": "Punjabi Tribune (Patiala-Sangrur)",
+          "portal": "https://epaper.punjabitribuneonline.com/t/10930"
+        }
+      ],
+      "access_note": "The Tribune’s official selector lists English editions for Haryana, Himachal, Delhi, Bathinda, Jalandhar, and Chandigarh; the official sister Punjabi Tribune portal lists the general, Ludhiana, Majha/Doaba, and Patiala-Sangrur editions. The reader indicates subscription access; no free public complete-issue PDF route was verified.",
+      "source_urls": [
+        "https://epaper.tribuneindia.com/",
+        "https://www.tribuneindia.com/",
+        "https://epaper.tribuneindia.com/t/106",
+        "https://epaper.tribuneindia.com/t/780",
+        "https://epaper.tribuneindia.com/t/687",
+        "https://epaper.tribuneindia.com/t/690",
+        "https://epaper.tribuneindia.com/t/684",
+        "https://epaper.tribuneindia.com/t/702",
+        "https://epaper.tribuneindia.com/t/299",
+        "https://epaper.punjabitribuneonline.com/",
+        "https://epaper.punjabitribuneonline.com/t/105",
+        "https://epaper.punjabitribuneonline.com/t/6111",
+        "https://epaper.punjabitribuneonline.com/t/6110",
+        "https://epaper.punjabitribuneonline.com/t/10930"
+      ]
+    },
+    {
+      "id": "rajasthan-patrika",
+      "name": "Rajasthan Patrika",
+      "aliases": [
+        "Patrika E-Paper"
+      ],
+      "language": "Hindi",
+      "portal": "https://epaper.patrika.com/",
+      "official_hosts": [
+        "epaper.patrika.com",
+        "www.epatrika.com",
+        "patrika.com"
+      ],
+      "download": {
+        "mode": "portal",
+        "description": "Official e-paper portal only; the reader displays a login-to-read gate and no unauthenticated complete-issue PDF route was verified."
+      },
+      "editions": [
+        {
+          "id": "ahmedabad",
+          "name": "Ahmedabad",
+          "portal": "https://epaper.patrika.com/"
+        },
+        {
+          "id": "ajmer",
+          "name": "Ajmer",
+          "portal": "https://epaper.patrika.com/"
+        },
+        {
+          "id": "alwar",
+          "name": "Alwar",
+          "portal": "https://epaper.patrika.com/"
+        },
+        {
+          "id": "bangalore",
+          "name": "Bangalore",
+          "aliases": [
+            "Bengaluru"
+          ],
+          "portal": "https://epaper.patrika.com/"
+        },
+        {
+          "id": "banswara",
+          "name": "Banswara",
+          "portal": "https://epaper.patrika.com/"
+        },
+        {
+          "id": "barmer",
+          "name": "Barmer",
+          "portal": "https://epaper.patrika.com/"
+        },
+        {
+          "id": "bhilwara",
+          "name": "Bhilwara",
+          "portal": "https://epaper.patrika.com/"
+        },
+        {
+          "id": "bhopal",
+          "name": "Bhopal",
+          "portal": "https://epaper.patrika.com/"
+        },
+        {
+          "id": "bikaner",
+          "name": "Bikaner",
+          "portal": "https://epaper.patrika.com/"
+        },
+        {
+          "id": "bilaspur",
+          "name": "Bilaspur",
+          "portal": "https://epaper.patrika.com/"
+        },
+        {
+          "id": "chennai",
+          "name": "Chennai",
+          "portal": "https://epaper.patrika.com/"
+        },
+        {
+          "id": "chhindwara",
+          "name": "Chhindwara",
+          "portal": "https://epaper.patrika.com/"
+        }
+      ],
+      "access_note": "The publisher’s official city selector lists these editions, linked onward to the official e-paper portal. The reader shows a login-to-read gate; no free public complete-issue PDF route was verified.",
+      "source_urls": [
+        "https://group.patrika.com/verticals",
+        "https://epaper.patrika.com/",
+        "https://www.epatrika.com/",
+        "https://www.patrika.com/",
+        "https://rajasthanpatrika.releasemyad.com/epaper"
+      ]
+    },
+    {
+      "id": "prabhat-khabar",
+      "name": "Prabhat Khabar",
+      "aliases": [
+        "Prabhat Khabar E-Paper"
+      ],
+      "language": "Hindi",
+      "portal": "https://epaper.prabhatkhabar.com/",
+      "official_hosts": [
+        "epaper.prabhatkhabar.com",
+        "prabhatkhabar.com"
+      ],
+      "download": {
+        "mode": "portal",
+        "description": "Official e-paper portal only; the publisher’s access policy ties e-paper access to payment and no public complete-issue PDF route was verified."
+      },
+      "editions": [
+        {
+          "id": "dhanbad-city",
+          "name": "Dhanbad City",
+          "portal": "https://epaper.prabhatkhabar.com/"
+        },
+        {
+          "id": "bokaro",
+          "name": "Bokaro",
+          "portal": "https://epaper.prabhatkhabar.com/"
+        },
+        {
+          "id": "giridih",
+          "name": "Giridih",
+          "portal": "https://epaper.prabhatkhabar.com/"
+        },
+        {
+          "id": "jamshedpur-city",
+          "name": "Jamshedpur City",
+          "portal": "https://epaper.prabhatkhabar.com/"
+        },
+        {
+          "id": "chaibasa",
+          "name": "Chaibasa",
+          "portal": "https://epaper.prabhatkhabar.com/"
+        },
+        {
+          "id": "ghatsila",
+          "name": "Ghatsila",
+          "portal": "https://epaper.prabhatkhabar.com/"
+        },
+        {
+          "id": "rourkela",
+          "name": "Rourkela",
+          "portal": "https://epaper.prabhatkhabar.com/"
+        }
+      ],
+      "access_note": "The official Dhanbad selector lists Dhanbad City, Bokaro, and Giridih; the Jamshedpur selector lists Jamshedpur City, Chaibasa, Ghatsila, and Rourkela. The publisher’s access policy describes paid subscriber access; no public complete-issue PDF route was verified.",
+      "source_urls": [
+        "https://epaper.prabhatkhabar.com/",
+        "https://www.prabhatkhabar.com/",
+        "https://epaper.prabhatkhabar.com/dhanbad",
+        "https://epaper.prabhatkhabar.com/jamshedpur",
+        "https://epaper.prabhatkhabar.com/access-and-delivery"
+      ]
+    },
+    {
+      "id": "new-indian-express",
+      "name": "The New Indian Express",
+      "aliases": [
+        "TNIE",
+        "New Indian Express E-Paper"
+      ],
+      "language": "English",
+      "portal": "https://epaper.newindianexpress.com/",
+      "official_hosts": [
+        "epaper.newindianexpress.com",
+        "newindianexpress.com"
+      ],
+      "download": {
+        "mode": "portal",
+        "description": "Official e-paper portal only; edition pages show paid subscription/sign-in offers and no unauthenticated complete-issue PDF route was verified."
+      },
+      "editions": [
+        {
+          "id": "chennai",
+          "name": "Chennai",
+          "portal": "https://epaper.newindianexpress.com/t/3353"
+        },
+        {
+          "id": "madurai",
+          "name": "Madurai",
+          "portal": "https://epaper.newindianexpress.com/t/3361"
+        },
+        {
+          "id": "coimbatore",
+          "name": "Coimbatore",
+          "portal": "https://epaper.newindianexpress.com/t/3360"
+        },
+        {
+          "id": "tiruchy",
+          "name": "Tiruchy",
+          "aliases": [
+            "Tiruchirappalli"
+          ],
+          "portal": "https://epaper.newindianexpress.com/t/3455"
+        },
+        {
+          "id": "tirunelveli",
+          "name": "Tirunelveli",
+          "portal": "https://epaper.newindianexpress.com/t/3480"
+        },
+        {
+          "id": "vellore",
+          "name": "Vellore",
+          "portal": "https://epaper.newindianexpress.com/t/3456"
+        },
+        {
+          "id": "dharmapuri",
+          "name": "Dharmapuri",
+          "portal": "https://epaper.newindianexpress.com/t/3458"
+        },
+        {
+          "id": "villupuram",
+          "name": "Villupuram",
+          "portal": "https://epaper.newindianexpress.com/t/5516"
+        },
+        {
+          "id": "nagapattinam",
+          "name": "Nagapattinam",
+          "portal": "https://epaper.newindianexpress.com/t/11449"
+        },
+        {
+          "id": "bengaluru",
+          "name": "Bengaluru",
+          "aliases": [
+            "Bangalore"
+          ],
+          "portal": "https://epaper.newindianexpress.com/t/3357"
+        },
+        {
+          "id": "mysuru",
+          "name": "Mysuru",
+          "aliases": [
+            "Mysore"
+          ],
+          "portal": "https://epaper.newindianexpress.com/t/28559"
+        },
+        {
+          "id": "belagavi",
+          "name": "Belagavi",
+          "aliases": [
+            "Belgaum"
+          ],
+          "portal": "https://epaper.newindianexpress.com/t/3467"
+        }
+      ],
+      "access_note": "The official edition selector lists city editions from Tamil Nadu and Karnataka, with further Andhra Pradesh, Telangana, Kerala, and Odisha options. These 12 entries use stable official /t/ edition links. Pages show subscription offers and sign-in; no unauthenticated complete-issue PDF route was verified.",
+      "source_urls": [
+        "https://epaper.newindianexpress.com/",
+        "https://www.newindianexpress.com/",
+        "https://epaper.newindianexpress.com/t/3353",
+        "https://epaper.newindianexpress.com/t/3357"
+      ]
+    },
+    {
+      "id": "sakal",
+      "name": "Sakal",
+      "aliases": [
+        "eSakal",
+        "Sakal E-Paper"
+      ],
+      "language": "Marathi",
+      "portal": "https://epaper.esakal.com/smartepaper/ui/home.aspx",
+      "official_hosts": [
+        "epaper.esakal.com",
+        "esakal.com"
+      ],
+      "download": {
+        "mode": "portal",
+        "description": "Official e-paper portal only; no unauthenticated complete-issue PDF route was verified."
+      },
+      "editions": [
+        {
+          "id": "akola",
+          "name": "Akola",
+          "portal": "https://epaper.esakal.com/smartepaper/ui/home.aspx"
+        },
+        {
+          "id": "belgaum",
+          "name": "Belgaum",
+          "aliases": [
+            "Belagavi"
+          ],
+          "portal": "https://epaper.esakal.com/smartepaper/ui/home.aspx"
+        },
+        {
+          "id": "chh-sambhajinagar",
+          "name": "Chh_Sambhajinagar",
+          "aliases": [
+            "Chhatrapati Sambhajinagar"
+          ],
+          "portal": "https://epaper.esakal.com/smartepaper/ui/home.aspx"
+        },
+        {
+          "id": "dhule",
+          "name": "Dhule",
+          "portal": "https://epaper.esakal.com/smartepaper/ui/home.aspx"
+        },
+        {
+          "id": "jalgaon",
+          "name": "Jalgaon",
+          "portal": "https://epaper.esakal.com/smartepaper/ui/home.aspx"
+        },
+        {
+          "id": "kolhapur",
+          "name": "Kolhapur",
+          "portal": "https://epaper.esakal.com/smartepaper/ui/home.aspx"
+        },
+        {
+          "id": "mumbai",
+          "name": "Mumbai",
+          "portal": "https://epaper.esakal.com/smartepaper/ui/home.aspx"
+        },
+        {
+          "id": "nagar",
+          "name": "Nagar",
+          "aliases": [
+            "Ahilyanagar"
+          ],
+          "portal": "https://epaper.esakal.com/smartepaper/ui/home.aspx"
+        },
+        {
+          "id": "nagpur",
+          "name": "Nagpur",
+          "portal": "https://epaper.esakal.com/smartepaper/ui/home.aspx"
+        },
+        {
+          "id": "nanded",
+          "name": "Nanded",
+          "portal": "https://epaper.esakal.com/smartepaper/ui/home.aspx"
+        },
+        {
+          "id": "nashik",
+          "name": "Nashik",
+          "portal": "https://epaper.esakal.com/smartepaper/ui/home.aspx"
+        },
+        {
+          "id": "pune",
+          "name": "Pune",
+          "portal": "https://epaper.esakal.com/smartepaper/ui/home.aspx"
+        }
+      ],
+      "access_note": "The official location selector lists these 12 editions (and additional Maharashtra locations). The CLI opens the official reader, whose live selector is date-aware. No unauthenticated complete-issue PDF route was verified.",
+      "source_urls": [
+        "https://epaper.esakal.com/smartepaper/ui/home.aspx",
+        "https://epaper.esakal.com/smartepaper/ui/home.aspx?q=Pune/Main/2026-11-15",
+        "https://www.esakal.com/about-us"
+      ]
+    },
+    {
+      "id": "vijaya-karnataka",
+      "name": "Vijaya Karnataka",
+      "aliases": [
+        "Vijaya Karnataka E-Paper"
+      ],
+      "language": "Kannada",
+      "portal": "https://www.vijaykarnatakaepaper.com/",
+      "official_hosts": [
+        "www.vijaykarnatakaepaper.com",
+        "vijaykarnataka.com"
+      ],
+      "download": {
+        "mode": "portal",
+        "description": "Official e-paper portal only; the site advertises subscription access and no unauthenticated complete-issue PDF route was verified."
+      },
+      "editions": [
+        {
+          "id": "bagalkot",
+          "name": "Namma Bagalkot",
+          "portal": "https://www.vijaykarnatakaepaper.com/"
+        },
+        {
+          "id": "belagavi",
+          "name": "Namma Belagavi",
+          "portal": "https://www.vijaykarnatakaepaper.com/"
+        },
+        {
+          "id": "bengaluru",
+          "name": "Namma Bengaluru",
+          "portal": "https://www.vijaykarnatakaepaper.com/"
+        },
+        {
+          "id": "ballari",
+          "name": "Namma Ballary",
+          "portal": "https://www.vijaykarnatakaepaper.com/"
+        },
+        {
+          "id": "bengaluru-gramanthara",
+          "name": "Namma Bengaluru Gramanthara",
+          "portal": "https://www.vijaykarnatakaepaper.com/"
+        },
+        {
+          "id": "bidar",
+          "name": "Namma Bidar",
+          "portal": "https://www.vijaykarnatakaepaper.com/"
+        },
+        {
+          "id": "chikkaballapura",
+          "name": "Namma Chikkaballapura",
+          "portal": "https://www.vijaykarnatakaepaper.com/"
+        },
+        {
+          "id": "chamarajanagara",
+          "name": "Namma Chamarajanagara",
+          "portal": "https://www.vijaykarnatakaepaper.com/"
+        },
+        {
+          "id": "chikkamagaluru",
+          "name": "Namma Chikkamagaluru",
+          "portal": "https://www.vijaykarnatakaepaper.com/"
+        },
+        {
+          "id": "chitradurga",
+          "name": "Namma Chitradurga",
+          "portal": "https://www.vijaykarnatakaepaper.com/"
+        },
+        {
+          "id": "davanagere",
+          "name": "Namma Davanagere",
+          "portal": "https://www.vijaykarnatakaepaper.com/"
+        },
+        {
+          "id": "gadag",
+          "name": "Namma Gadaga",
+          "portal": "https://www.vijaykarnatakaepaper.com/"
+        }
+      ],
+      "access_note": "The official edition selector contains these Karnataka district/city options (among a larger list). The e-paper is subscription-based; no public complete-issue PDF route was verified. Use the portal and its own reader.",
+      "source_urls": [
+        "https://www.vijaykarnatakaepaper.com/",
+        "https://vijaykarnataka.com/"
+      ]
+    },
+    {
+      "id": "punjab-kesari",
+      "name": "Punjab Kesari",
+      "aliases": [
+        "Punjab Kesari E-Paper"
+      ],
+      "language": "Hindi",
+      "portal": "https://epaper.punjabkesari.in/",
+      "official_hosts": [
+        "epaper.punjabkesari.in",
+        "punjabkesari.in"
+      ],
+      "download": {
+        "mode": "portal",
+        "description": "Official e-paper portal only; the publisher indicates sign-in/subscription access and no unauthenticated complete-issue PDF route was verified."
+      },
+      "editions": [
+        {
+          "id": "main-jalandhar",
+          "name": "Main Jalandhar",
+          "portal": "https://epaper.punjabkesari.in/"
+        },
+        {
+          "id": "main-ludhiana",
+          "name": "Main Ludhiana",
+          "portal": "https://epaper.punjabkesari.in/"
+        },
+        {
+          "id": "jalandhar-kesari",
+          "name": "Jalandhar Kesari",
+          "portal": "https://epaper.punjabkesari.in/"
+        },
+        {
+          "id": "ludhiana-kesari",
+          "name": "Ludhiana Kesari",
+          "portal": "https://epaper.punjabkesari.in/"
+        },
+        {
+          "id": "amritsar-kesari",
+          "name": "Amritsar Kesari",
+          "portal": "https://epaper.punjabkesari.in/"
+        },
+        {
+          "id": "bathinda-kesari",
+          "name": "Bathinda Kesari",
+          "portal": "https://epaper.punjabkesari.in/"
+        },
+        {
+          "id": "chandigarh-main",
+          "name": "Chandigarh Main",
+          "portal": "https://epaper.punjabkesari.in/"
+        },
+        {
+          "id": "main-panipat",
+          "name": "Main Panipat",
+          "portal": "https://epaper.punjabkesari.in/"
+        },
+        {
+          "id": "ambala-kesari",
+          "name": "Ambala Kesari",
+          "portal": "https://epaper.punjabkesari.in/"
+        },
+        {
+          "id": "himachal-main",
+          "name": "Himachal Main",
+          "portal": "https://epaper.punjabkesari.in/"
+        },
+        {
+          "id": "jammu-main",
+          "name": "Jammu Main",
+          "portal": "https://epaper.punjabkesari.in/"
+        },
+        {
+          "id": "uttar-pradesh-kesari",
+          "name": "Uttar Pradesh Kesari",
+          "portal": "https://epaper.punjabkesari.in/"
+        }
+      ],
+      "access_note": "The official selector lists these editions across Punjab, Chandigarh, Haryana, Himachal Pradesh, Jammu and Kashmir, and Uttar Pradesh. The publisher says e-paper reading requires sign-in/subscription; no public complete-issue PDF route was verified.",
+      "source_urls": [
+        "https://epaper.punjabkesari.in/",
+        "https://epaper.punjabkesari.in/punjab/2026-11-15/main-jalandhar",
+        "https://epaper.punjabkesari.in/chandigarh/2026-11-15/chandigarh-main",
+        "https://epaper.punjabkesari.in/haryana/2026-11-15/main-panipat",
+        "https://epaper.punjabkesari.in/himachal-pradesh/2026-11-15/himachal-main",
+        "https://epaper.punjabkesari.in/jammu-kashmir/2026-11-15/jammu-main",
+        "https://epaper.punjabkesari.in/uttar-pradesh/2026-11-15/uttar-pradesh-kesari",
+        "https://epaper.punjabkesari.in/subscription",
+        "https://epaper.punjabkesari.in/login"
+      ]
+    }
+  ]
+}

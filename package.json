@@ -1,0 +1,21 @@
+{
+  "name": "media-monitoring-hub",
+  "version": "1.0.0",
+  "description": "Comprehensive Media Monitoring & Indian ePaper Intelligence Platform",
+  "type": "module",
+  "scripts": {
+    "epaper": "bun run src/epaper/epaper.ts",
+    "list": "bun run src/epaper/epaper.ts list",
+    "download": "bun run src/epaper/epaper.ts download",
+    "batch": "bun run src/epaper/epaper.ts batch",
+    "render": "bun run src/epaper/epaper.ts render",
+    "clip": "bun run src/epaper/epaper.ts clip",
+    "pipeline": "bun run scripts/run_pipeline.ts",
+    "ingest": "python3 scripts/ingest_to_db.py",
+    "dashboard": "python3 scripts/generate_dashboard.py",
+    "db:count": "sqlite3 data/media_dataset.db \"SELECT COUNT(*) FROM clippings_metadata;\""
+  },
+  "devDependencies": {
+    "@types/bun": "latest"
+  }
+}
