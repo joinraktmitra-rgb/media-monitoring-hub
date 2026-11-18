@@ -10,6 +10,7 @@
     "batch": "bun run src/epaper/epaper.ts batch",
     "render": "bun run src/epaper/epaper.ts render",
     "clip": "bun run src/epaper/epaper.ts clip",
+    "scan:print": "uv run --with pymupdf python3 scripts/scan_all_epapers.py",
     "online": "python3 scripts/online_monitor.py",
     "pipeline": "bun run scripts/run_pipeline.ts",
     "ingest": "python3 scripts/ingest_to_db.py",
