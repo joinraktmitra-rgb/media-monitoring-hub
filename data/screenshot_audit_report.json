@@ -1,0 +1,192 @@
+{
+  "timestamp": "2026-11-20 01:07:58",
+  "total": 3,
+  "succeeded": 3,
+  "failed": 0,
+  "success_rate_percent": 100.0,
+  "avg_quality_score": 100.0,
+  "learned_domains": {
+    "kashitamil.iitm.ac.in": {
+      "success_count": 4,
+      "failure_count": 0,
+      "avg_quality_score": 91.2,
+      "optimal_wait_ms": 1500,
+      "custom_headline_selector": "h2",
+      "block_trackers": false,
+      "last_updated": "2026-11-20 00:40:34"
+    },
+    "newsonair.gov.in": {
+      "success_count": 3,
+      "failure_count": 0,
+      "avg_quality_score": 100.0,
+      "optimal_wait_ms": 1500,
+      "custom_headline_selector": "h2",
+      "block_trackers": false,
+      "last_updated": "2026-11-20 00:40:17"
+    },
+    "jagranjosh.com": {
+      "success_count": 2,
+      "failure_count": 0,
+      "avg_quality_score": 95.0,
+      "optimal_wait_ms": 1500,
+      "custom_headline_selector": "h1",
+      "block_trackers": false,
+      "last_updated": "2026-11-20 00:40:23"
+    },
+    "bhu.ac.in": {
+      "success_count": 1,
+      "failure_count": 0,
+      "avg_quality_score": 100.0,
+      "optimal_wait_ms": 1500,
+      "custom_headline_selector": "div",
+      "block_trackers": false,
+      "last_updated": "2026-11-20 00:39:23"
+    },
+    "ddnews.gov.in": {
+      "success_count": 1,
+      "failure_count": 0,
+      "avg_quality_score": 100.0,
+      "optimal_wait_ms": 1500,
+      "custom_headline_selector": "div",
+      "block_trackers": false,
+      "last_updated": "2026-11-20 00:39:28"
+    },
+    "youtube.com": {
+      "success_count": 5,
+      "failure_count": 0,
+      "avg_quality_score": 100.0,
+      "optimal_wait_ms": 1500,
+      "custom_headline_selector": "h1",
+      "block_trackers": false,
+      "last_updated": "2026-11-20 00:39:54"
+    },
+    "instagram.com": {
+      "success_count": 3,
+      "failure_count": 0,
+      "avg_quality_score": 100.0,
+      "optimal_wait_ms": 1500,
+      "custom_headline_selector": "h2",
+      "block_trackers": false,
+      "last_updated": "2026-11-20 00:40:06"
+    },
+    "news18.com": {
+      "success_count": 1,
+      "failure_count": 0,
+      "avg_quality_score": 100.0,
+      "optimal_wait_ms": 1500,
+      "custom_headline_selector": "h1",
+      "block_trackers": false,
+      "last_updated": "2026-11-20 00:40:20"
+    },
+    "uniindia.com": {
+      "success_count": 1,
+      "failure_count": 0,
+      "avg_quality_score": 85.0,
+      "optimal_wait_ms": 1500,
+      "custom_headline_selector": "div",
+      "block_trackers": false,
+      "last_updated": "2026-11-20 00:40:28"
+    },
+    "tamil.newsbytesapp.com": {
+      "success_count": 1,
+      "failure_count": 0,
+      "avg_quality_score": 100.0,
+      "optimal_wait_ms": 1500,
+      "custom_headline_selector": "h1",
+      "block_trackers": false,
+      "last_updated": "2026-11-20 01:07:47"
+    },
+    "hyderabadmail.com": {
+      "success_count": 1,
+      "failure_count": 0,
+      "avg_quality_score": 100.0,
+      "optimal_wait_ms": 1500,
+      "custom_headline_selector": "h1",
+      "block_trackers": false,
+      "last_updated": "2026-11-20 01:07:52"
+    },
+    "gktoday.in": {
+      "success_count": 1,
+      "failure_count": 0,
+      "avg_quality_score": 100.0,
+      "optimal_wait_ms": 1500,
+      "custom_headline_selector": "h1",
+      "block_trackers": false,
+      "last_updated": "2026-11-20 01:07:57"
+    }
+  },
+  "results": [
+    {
+      "url": "https://tamil.newsbytesapp.com/news/india/kashi-tamil-sangamam-5-0-southern-railway-announces-kanyakumari-to-banaras-special-trains/story",
+      "resolved_url": "https://tamil.newsbytesapp.com/news/india/kashi-tamil-sangamam-5-0-southern-railway-announces-kanyakumari-to-banaras-special-trains/story",
+      "headline": "காசி தமிழ் சங்கமம் 5.0: கன்னியாகுமரி - பனாரஸ் இடையே சிறப்பு ரயில்கள் இயக்கம்",
+      "publication": "tamil.newsbytesapp.com",
+      "output_path": "clips/online/tamil_newsbytesapp_c_7790c9cc37.png",
+      "status": "VERIFIED_CLEAN",
+      "http_status": 200,
+      "file_size_bytes": 365873,
+      "image_width": 1440,
+      "image_height": 900,
+      "pixel_stddev": 61.66,
+      "pixel_mean": 232.2,
+      "popups_removed": 2,
+      "headline_matched": true,
+      "headline_score": 1,
+      "headline_tag": "H1",
+      "detected_headline": "காசி தமிழ் சங்கமம் 5.0: கன்னியாகுமரி - பனாரஸ் இடையே சிறப்பு ரயில்கள் இயக்கம்",
+      "scroll_offset": 425.984375,
+      "quality_score": 100,
+      "attempt_used": 1,
+      "error": null,
+      "duration_sec": 5.0
+    },
+    {
+      "url": "https://hyderabadmail.com/scr-kashi-tamil-sangamam-special-trains-warangal-mancherial/",
+      "resolved_url": "https://hyderabadmail.com/scr-kashi-tamil-sangamam-special-trains-warangal-mancherial/",
+      "headline": "Kashi Tamil Sangamam 5.0: SCR special trains to stop at Warangal, Mancherial",
+      "publication": "hyderabadmail.com",
+      "output_path": "clips/online/hyderabadmail_com_3fceea22b3.png",
+      "status": "VERIFIED_CLEAN",
+      "http_status": 200,
+      "file_size_bytes": 970540,
+      "image_width": 1440,
+      "image_height": 900,
+      "pixel_stddev": 68.17,
+      "pixel_mean": 214.55,
+      "popups_removed": 6,
+      "headline_matched": true,
+      "headline_score": 1,
+      "headline_tag": "H1",
+      "detected_headline": "Kashi Tamil Sangamam 5.0: SCR special trains to stop at Warangal, Mancherial",
+      "scroll_offset": 272.671875,
+      "quality_score": 100,
+      "attempt_used": 1,
+      "error": null,
+      "duration_sec": 5.52
+    },
+    {
+      "url": "https://www.gktoday.in/kashi-tamil-sangamam-4-0-outlay-tops-annual-tamil-promotion-budget/",
+      "resolved_url": "https://www.gktoday.in/kashi-tamil-sangamam-4-0-outlay-tops-annual-tamil-promotion-budget/",
+      "headline": "Kashi Tamil Sangamam 4.0 Outlay Tops Annual Tamil Promotion Budget",
+      "publication": "gktoday.in",
+      "output_path": "clips/online/gktoday_in_2c35e5eec6.png",
+      "status": "VERIFIED_CLEAN",
+      "http_status": 200,
+      "file_size_bytes": 527021,
+      "image_width": 1440,
+      "image_height": 900,
+      "pixel_stddev": 53.3,
+      "pixel_mean": 228.07,
+      "popups_removed": 4,
+      "headline_matched": true,
+      "headline_score": 0.6,
+      "headline_tag": "H1",
+      "detected_headline": "Kashi Tamil Sangamam 4.0 Outlay Tops Annual Tamil Promotion Budget",
+      "scroll_offset": 52.59375,
+      "quality_score": 100,
+      "attempt_used": 1,
+      "error": null,
+      "duration_sec": 4.86
+    }
+  ]
+}

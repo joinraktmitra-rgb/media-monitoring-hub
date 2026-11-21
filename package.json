@@ -5,6 +5,8 @@
   "type": "module",
   "scripts": {
     "epaper": "bun run src/epaper/epaper.ts",
+    "digital": "bun run src/digital/digital.ts",
+    "instagram": "bun run src/social/instagram.ts",
     "list": "bun run src/epaper/epaper.ts list",
     "download": "bun run src/epaper/epaper.ts download",
     "batch": "bun run src/epaper/epaper.ts batch",
@@ -12,14 +14,28 @@
     "clip": "bun run src/epaper/epaper.ts clip",
     "scan:print": "uv run --with pymupdf python3 scripts/scan_all_epapers.py",
     "online": "python3 scripts/online_monitor.py",
+    "screenshot": "bun run src/screenshot/capture.ts",
+    "screenshot:all": "python3 scripts/capture_evidence_screenshots.py",
+    "screenshot:prune": "python3 scripts/capture_evidence_screenshots.py --prune-obsolete",
     "pipeline": "bun run scripts/run_pipeline.ts",
     "ingest": "python3 scripts/ingest_to_db.py",
     "dashboard": "python3 scripts/generate_dashboard.py",
     "report:docx": "uv run --with python-docx python3 scripts/generate_docx_report.py",
     "report": "uv run --with python-docx python3 scripts/generate_docx_report.py && python3 scripts/generate_dashboard.py",
-    "db:count": "sqlite3 data/media_dataset.db \"SELECT COUNT(*) FROM clippings_metadata;\""
+    "db:count": "sqlite3 data/media_dataset.db \"SELECT COUNT(*) FROM clippings_metadata;\"",
+    "mcp": "bun run src/mcp/server.ts",
+    "tunnel": "cloudflared tunnel --protocol http2 --url http://localhost:8787",
+    "auth:create": "bun run src/cli/auth.ts create",
+    "auth:list": "bun run src/cli/auth.ts list",
+    "auth:revoke": "bun run src/cli/auth.ts revoke"
   },
   "devDependencies": {
     "@types/bun": "latest"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.32.2",
+    "hono": "^4.13.19",
+    "pdf-lib": "^1.17.1",
+    "zod": "^4.6.7"
   }
 }

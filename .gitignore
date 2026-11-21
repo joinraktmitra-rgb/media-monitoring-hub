@@ -2,14 +2,29 @@ node_modules/
 .DS_Store
 __pycache__/
 *.pyc
+*.pyo
+.Python
+tsconfig.tsbuildinfo
 
-# Raw downloads & temporary page renderings
-downloads/*.pdf
-pages/*.png
-pages/*.json
-clips/*.png
-outputs/dashboard.html
+# Raw downloads, rendered pages, bulk media
+downloads/
+pages/
+epapers/
+clips/
+extracted_report_media/
+extracted_sample_images/
+assets/tessdata/
+dataset/
 
-# Database locks/temporary files
+# Generated outputs & local DBs
+outputs/
+data/*.db
+data/*.db-shm
+data/*.db-wal
+data/rendered/
 *.db-journal
 *.db-wal
+
+# Local docs / large reports (keep repo lean)
+*.docx
+*.pdf

@@ -1,0 +1,549 @@
+{
+  "version": "1.1.0",
+  "total": 47,
+  "categories": [
+    "wire",
+    "business",
+    "english-digital",
+    "hindi-digital",
+    "broadcast-english",
+    "broadcast-hindi",
+    "public-broadcaster"
+  ],
+  "publications": [
+    {
+      "slug": "pti",
+      "name": "PTI",
+      "category": "wire",
+      "lang": "en",
+      "domain": "ptinews.com",
+      "strategies": ["news-sitemap", "gnews-rss"],
+      "endpoints": {
+        "sitemap": "https://www.ptinews.com/news-sitemap.xml"
+      }
+    },
+    {
+      "slug": "ani",
+      "name": "ANI",
+      "category": "wire",
+      "lang": "en",
+      "domain": "aninews.in",
+      "strategies": ["news-sitemap", "gnews-rss"],
+      "endpoints": {
+        "sitemap": "https://www.aninews.in/google-news-sitemap.xml"
+      }
+    },
+    {
+      "slug": "uni",
+      "name": "UNI",
+      "category": "wire",
+      "lang": "en",
+      "domain": "uniindia.com",
+      "strategies": ["rss", "news-sitemap", "gnews-rss"],
+      "endpoints": {
+        "rss": "https://www.uniindia.com/rss",
+        "sitemap": "https://www.uniindia.com/news-sitemap.xml"
+      }
+    },
+    {
+      "slug": "ians",
+      "name": "IANS",
+      "category": "wire",
+      "lang": "en",
+      "domain": "ianslive.in",
+      "strategies": ["news-sitemap", "gnews-rss"],
+      "endpoints": {
+        "sitemap": "https://ianslive.in/sitemap.xml"
+      }
+    },
+    {
+      "slug": "moneycontrol",
+      "name": "Money Control",
+      "category": "business",
+      "lang": "en",
+      "domain": "moneycontrol.com",
+      "strategies": ["news-sitemap", "rss", "gnews-rss"],
+      "endpoints": {
+        "sitemap": "https://www.moneycontrol.com/news/news-sitemap.xml",
+        "rss": "https://www.moneycontrol.com/rss/latestnews.xml"
+      }
+    },
+    {
+      "slug": "bw-businessworld",
+      "name": "BW Businessworld",
+      "category": "business",
+      "lang": "en",
+      "domain": "businessworld.in",
+      "strategies": ["gnews-rss", "news-sitemap"],
+      "endpoints": {
+        "sitemap": "https://www.businessworld.in/sitemap/posts"
+      }
+    },
+    {
+      "slug": "business-today",
+      "name": "Business Today",
+      "category": "business",
+      "lang": "en",
+      "domain": "businesstoday.in",
+      "strategies": ["rss", "news-sitemap", "gnews-rss"],
+      "endpoints": {
+        "rss": "https://www.businesstoday.in/rssfeeds?id=home",
+        "sitemap": "https://www.businesstoday.in/rssfeeds/sitemap.xml"
+      }
+    },
+    {
+      "slug": "ndtv-profit",
+      "name": "NDTV Profit",
+      "category": "business",
+      "lang": "en",
+      "domain": "ndtvprofit.com",
+      "strategies": ["rss", "gnews-rss"],
+      "endpoints": {
+        "rss": "https://feeds.feedburner.com/ndtvprofit-latest"
+      }
+    },
+    {
+      "slug": "financial-express-digital",
+      "name": "Financial Express Digital",
+      "category": "business",
+      "lang": "en",
+      "domain": "financialexpress.com",
+      "strategies": ["news-sitemap", "gnews-rss"],
+      "endpoints": {
+        "sitemap": "https://www.financialexpress.com/news-sitemap.xml"
+      }
+    },
+    {
+      "slug": "et-now",
+      "name": "ET Now",
+      "category": "business",
+      "lang": "en",
+      "domain": "etnownews.com",
+      "strategies": ["rss", "news-sitemap", "gnews-rss"],
+      "endpoints": {
+        "rss": "https://www.etnownews.com/feeds/gns-etn-latest.xml",
+        "sitemap": "https://www.etnownews.com/feeds/google-news-sitemap-etnow.xml"
+      }
+    },
+    {
+      "slug": "et-now-swadesh",
+      "name": "ET Now Swadesh",
+      "category": "business",
+      "lang": "hi",
+      "domain": "hindi.etnownews.com",
+      "strategies": ["news-sitemap", "gnews-rss"],
+      "endpoints": {
+        "sitemap": "https://hindi.etnownews.com/feeds/google-news-sitemap-etnow-hindi.xml"
+      }
+    },
+    {
+      "slug": "cnbc-tv18",
+      "name": "CNBC-TV18",
+      "category": "business",
+      "lang": "en",
+      "domain": "cnbctv18.com",
+      "strategies": ["news-sitemap", "gnews-rss"],
+      "endpoints": {
+        "sitemap": "https://www.cnbctv18.com/commonfeeds/v1/cne/sitemap/google-news.xml"
+      }
+    },
+    {
+      "slug": "cnbc-awaaz",
+      "name": "CNBC Awaaz",
+      "category": "business",
+      "lang": "hi",
+      "domain": "hindi.cnbctv18.com",
+      "strategies": ["news-sitemap", "gnews-rss"],
+      "endpoints": {
+        "sitemap": "https://hindi.cnbctv18.com/commonfeeds/v1/cnh/sitemap/google-news.xml"
+      }
+    },
+    {
+      "slug": "zee-business",
+      "name": "Zee Business",
+      "category": "business",
+      "lang": "en",
+      "domain": "zeebiz.com",
+      "strategies": ["youtube-rss", "gnews-rss"],
+      "endpoints": {
+        "youtubeChannelId": "UCkXopQ3ubd-rnXnStZqCl2w"
+      }
+    },
+    {
+      "slug": "the-hans-india",
+      "name": "The Hans India",
+      "category": "english-digital",
+      "lang": "en",
+      "domain": "thehansindia.com",
+      "strategies": ["news-sitemap", "rss", "gnews-rss"],
+      "endpoints": {
+        "sitemap": "https://www.thehansindia.com/news-sitemap-daily.xml",
+        "rss": "https://www.thehansindia.com/google_feeds.xml"
+      }
+    },
+    {
+      "slug": "free-press-journal",
+      "name": "The Free Press Journal",
+      "category": "english-digital",
+      "lang": "en",
+      "domain": "freepressjournal.in",
+      "strategies": ["news-sitemap", "gnews-rss"],
+      "endpoints": {
+        "sitemap": "https://www.freepressjournal.in/news-sitemap.xml"
+      }
+    },
+    {
+      "slug": "the-print",
+      "name": "The Print",
+      "category": "english-digital",
+      "lang": "en",
+      "domain": "theprint.in",
+      "strategies": ["youtube-rss", "gnews-rss"],
+      "endpoints": {
+        "youtubeChannelId": "UCuyRsHZILrU7ZDIAbGASHdA"
+      }
+    },
+    {
+      "slug": "outlook",
+      "name": "Outlook",
+      "category": "english-digital",
+      "lang": "en",
+      "domain": "outlookindia.com",
+      "strategies": ["news-sitemap", "gnews-rss"],
+      "endpoints": {
+        "sitemap": "https://www.outlookindia.com/oisitemap-news.xml"
+      }
+    },
+    {
+      "slug": "jagran-josh",
+      "name": "Jagran Josh",
+      "category": "english-digital",
+      "lang": "en",
+      "domain": "jagranjosh.com",
+      "strategies": ["news-sitemap", "gnews-rss"],
+      "endpoints": {
+        "sitemap": "https://www.jagranjosh.com/newsitemap-news-english.xml"
+      }
+    },
+    {
+      "slug": "rediff-news",
+      "name": "Rediff News",
+      "category": "english-digital",
+      "lang": "en",
+      "domain": "rediff.com",
+      "strategies": ["news-sitemap", "rss", "gnews-rss"],
+      "endpoints": {
+        "sitemap": "https://www.rediff.com/gnewssitemap.xml",
+        "rss": "http://www.rediff.com/rss.xml"
+      }
+    },
+    {
+      "slug": "india-com",
+      "name": "India.com",
+      "category": "english-digital",
+      "lang": "en",
+      "domain": "india.com",
+      "strategies": ["youtube-rss", "gnews-rss"],
+      "endpoints": {
+        "youtubeChannelId": "UC8eEZ-l5z_zzG8GT0Tu0PaA"
+      }
+    },
+    {
+      "slug": "the-news-minute",
+      "name": "The News Minute",
+      "category": "english-digital",
+      "lang": "en",
+      "domain": "thenewsminute.com",
+      "strategies": ["news-sitemap", "rss", "gnews-rss"],
+      "endpoints": {
+        "sitemap": "https://www.thenewsminute.com/news_sitemap.xml",
+        "rss": "https://www.thenewsminute.com/stories.rss"
+      }
+    },
+    {
+      "slug": "the-federal",
+      "name": "The Federal",
+      "category": "english-digital",
+      "lang": "en",
+      "domain": "thefederal.com",
+      "strategies": ["news-sitemap", "rss", "gnews-rss"],
+      "endpoints": {
+        "sitemap": "https://thefederal.com/news-sitemap-daily.xml",
+        "rss": "https://thefederal.com/google_feeds.xml"
+      }
+    },
+    {
+      "slug": "firstpost",
+      "name": "First Post",
+      "category": "english-digital",
+      "lang": "en",
+      "domain": "firstpost.com",
+      "strategies": ["news-sitemap", "gnews-rss"],
+      "endpoints": {
+        "sitemap": "https://www.firstpost.com/commonfeeds/v1/mfp/sitemap/google-news.xml"
+      }
+    },
+    {
+      "slug": "the-wire",
+      "name": "The Wire",
+      "category": "english-digital",
+      "lang": "en",
+      "domain": "thewire.in",
+      "strategies": ["news-sitemap", "gnews-rss"],
+      "endpoints": {
+        "sitemap": "https://thewire.in/news-sitemap.xml"
+      }
+    },
+    {
+      "slug": "news18",
+      "name": "News18",
+      "category": "broadcast-english",
+      "lang": "en",
+      "domain": "news18.com",
+      "strategies": ["rss", "news-sitemap", "gnews-rss"],
+      "endpoints": {
+        "rss": "https://www.news18.com/commonfeeds/v1/eng/rss/text.xml",
+        "sitemap": "https://www.news18.com/commonfeeds/v1/eng/sitemap/google-news.xml"
+      }
+    },
+    {
+      "slug": "cnn-news18",
+      "name": "CNN-News18",
+      "category": "broadcast-english",
+      "lang": "en",
+      "domain": "news18.com",
+      "strategies": ["youtube-rss", "rss", "gnews-rss"],
+      "endpoints": {
+        "youtubeChannelId": "UCef1-8eOpJgud7szVPlZQAQ",
+        "rss": "https://www.news18.com/commonfeeds/v1/eng/rss/text.xml",
+        "gnewsQuery": "\"CNN-News18\""
+      }
+    },
+    {
+      "slug": "india-today",
+      "name": "India Today",
+      "category": "broadcast-english",
+      "lang": "en",
+      "domain": "indiatoday.in",
+      "strategies": ["rss", "gnews-rss"],
+      "endpoints": {
+        "rss": "https://www.indiatoday.in/rssfeeds?id=home"
+      }
+    },
+    {
+      "slug": "ndtv",
+      "name": "NDTV",
+      "category": "broadcast-english",
+      "lang": "en",
+      "domain": "ndtv.com",
+      "strategies": ["rss", "gnews-rss"],
+      "endpoints": {
+        "rss": "https://feeds.feedburner.com/ndtvnews-latest"
+      }
+    },
+    {
+      "slug": "times-now",
+      "name": "Times Now",
+      "category": "broadcast-english",
+      "lang": "en",
+      "domain": "timesnownews.com",
+      "strategies": ["news-sitemap", "gnews-rss"],
+      "endpoints": {
+        "sitemap": "https://www.timesnownews.com/google-news-sitemap-en.xml"
+      }
+    },
+    {
+      "slug": "republic-tv",
+      "name": "Republic TV",
+      "category": "broadcast-english",
+      "lang": "en",
+      "domain": "republicworld.com",
+      "strategies": ["news-sitemap", "gnews-rss"],
+      "endpoints": {
+        "sitemap": "https://www.republicworld.com/sitemaps/sitemaps-news.xml"
+      }
+    },
+    {
+      "slug": "wion",
+      "name": "WION",
+      "category": "broadcast-english",
+      "lang": "en",
+      "domain": "wionews.com",
+      "strategies": ["youtube-rss", "gnews-rss"],
+      "endpoints": {
+        "youtubeChannelId": "UC_gUM8rL-Lrg6O3adPW9K1g"
+      }
+    },
+    {
+      "slug": "times-now-navbharat",
+      "name": "Times Now Navbharat",
+      "category": "broadcast-hindi",
+      "lang": "hi",
+      "domain": "timesnowhindi.com",
+      "strategies": ["rss", "news-sitemap", "gnews-rss"],
+      "endpoints": {
+        "rss": "https://www.timesnowhindi.com/feeds/gns-hin-latest.xml",
+        "sitemap": "https://www.timesnowhindi.com/feeds/tnhindi-google-news-sitemap.xml"
+      }
+    },
+    {
+      "slug": "zee-news",
+      "name": "Zee News",
+      "category": "broadcast-hindi",
+      "lang": "hi",
+      "domain": "zeenews.india.com",
+      "strategies": ["youtube-rss", "gnews-rss"],
+      "endpoints": {
+        "youtubeChannelId": "UCIvaYmXn910QMdemBG3v1pQ",
+        "gnewsQuery": "\"Zee News\""
+      }
+    },
+    {
+      "slug": "abp-news",
+      "name": "ABP News",
+      "category": "broadcast-hindi",
+      "lang": "hi",
+      "domain": "abplive.com",
+      "strategies": ["news-sitemap", "gnews-rss"],
+      "endpoints": {
+        "sitemap": "https://www.abplive.com/google-news-sitemap.xml"
+      }
+    },
+    {
+      "slug": "news24",
+      "name": "News24",
+      "category": "broadcast-hindi",
+      "lang": "hi",
+      "domain": "news24online.com",
+      "strategies": ["news-sitemap", "gnews-rss"],
+      "endpoints": {
+        "sitemap": "https://news24online.com/sitemap-news.xml"
+      }
+    },
+    {
+      "slug": "the-lallantop",
+      "name": "The Lallantop",
+      "category": "hindi-digital",
+      "lang": "hi",
+      "domain": "thelallantop.com",
+      "strategies": ["news-sitemap", "gnews-rss"],
+      "endpoints": {
+        "sitemap": "https://www.thelallantop.com/sitemaps/news-sitemap.xml"
+      }
+    },
+    {
+      "slug": "tv9-bharatvarsh",
+      "name": "TV9 Bharatvarsh",
+      "category": "broadcast-hindi",
+      "lang": "hi",
+      "domain": "tv9hindi.com",
+      "strategies": ["news-sitemap", "rss", "gnews-rss"],
+      "endpoints": {
+        "sitemap": "https://www.tv9hindi.com/news-sitemap.xml",
+        "rss": "https://www.tv9hindi.com/feed/gn"
+      }
+    },
+    {
+      "slug": "aaj-tak",
+      "name": "Aaj Tak",
+      "category": "broadcast-hindi",
+      "lang": "hi",
+      "domain": "aajtak.in",
+      "strategies": ["rss", "news-sitemap", "gnews-rss"],
+      "endpoints": {
+        "rss": "https://www.aajtak.in/rssfeeds?id=home",
+        "sitemap": "https://www.aajtak.in/rssfeeds/news-sitemap.xml"
+      }
+    },
+    {
+      "slug": "india-tv",
+      "name": "India TV",
+      "category": "broadcast-hindi",
+      "lang": "hi",
+      "domain": "indiatvnews.com",
+      "strategies": ["news-sitemap", "rss", "gnews-rss"],
+      "endpoints": {
+        "sitemap": "https://www.indiatvnews.com/news-sitemap.xml",
+        "rss": "https://api.indiatvnews.com/v3/en/gp7naGtJSQrs9oi/rss/topstory"
+      }
+    },
+    {
+      "slug": "republic-bharat",
+      "name": "Republic Bharat",
+      "category": "broadcast-hindi",
+      "lang": "hi",
+      "domain": "republicbharat.com",
+      "strategies": ["news-sitemap", "gnews-rss"],
+      "endpoints": {
+        "sitemap": "https://www.republicbharat.com/sitemap/sitemap-news.xml"
+      }
+    },
+    {
+      "slug": "bharat24",
+      "name": "Bharat24",
+      "category": "broadcast-hindi",
+      "lang": "hi",
+      "domain": "bharat24live.com",
+      "strategies": ["youtube-rss", "gnews-rss"],
+      "endpoints": {
+        "youtubeChannelId": "UCletdD57yP0THjBdSmBee3w"
+      }
+    },
+    {
+      "slug": "bbc-news-hindi",
+      "name": "BBC News Hindi",
+      "category": "hindi-digital",
+      "lang": "hi",
+      "domain": "bbc.com/hindi",
+      "strategies": ["rss", "gnews-rss"],
+      "endpoints": {
+        "rss": "https://feeds.bbci.co.uk/hindi/rss.xml"
+      }
+    },
+    {
+      "slug": "dd-news",
+      "name": "DD News",
+      "category": "public-broadcaster",
+      "lang": "en/hi",
+      "domain": "ddnews.gov.in",
+      "strategies": ["gnews-rss", "news-sitemap"],
+      "endpoints": {
+        "sitemap": "https://ddnews.gov.in/wp-sitemap.xml"
+      }
+    },
+    {
+      "slug": "dd-india",
+      "name": "DD India",
+      "category": "public-broadcaster",
+      "lang": "en",
+      "domain": "ddnews.gov.in",
+      "strategies": ["youtube-rss", "gnews-rss"],
+      "endpoints": {
+        "youtubeChannelId": "UCGDQNvybfDDeGTf4GtigXaw",
+        "gnewsQuery": "\"DD India\""
+      }
+    },
+    {
+      "slug": "sansad-tv",
+      "name": "Sansad TV",
+      "category": "public-broadcaster",
+      "lang": "en/hi",
+      "domain": "sansadtv.nic.in",
+      "strategies": ["youtube-rss", "gnews-rss"],
+      "endpoints": {
+        "youtubeChannelId": "UCISgnSNwqQ2i8lhCun3KtQg"
+      }
+    },
+    {
+      "slug": "news-on-air",
+      "name": "News on AIR",
+      "category": "public-broadcaster",
+      "lang": "en/hi",
+      "domain": "newsonair.gov.in",
+      "strategies": ["wp-api", "gnews-rss"],
+      "endpoints": {
+        "wpApi": "https://www.newsonair.gov.in/wp-json/wp/v2/posts"
+      }
+    }
+  ]
+}

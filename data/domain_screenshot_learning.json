@@ -1,0 +1,128 @@
+{
+  "kashitamil.iitm.ac.in": {
+    "success_count": 4,
+    "failure_count": 0,
+    "avg_quality_score": 91.2,
+    "optimal_wait_ms": 1500,
+    "custom_headline_selector": "h2",
+    "block_trackers": false,
+    "last_updated": "2026-11-20 00:40:34"
+  },
+  "newsonair.gov.in": {
+    "success_count": 3,
+    "failure_count": 0,
+    "avg_quality_score": 100.0,
+    "optimal_wait_ms": 1500,
+    "custom_headline_selector": "h2",
+    "block_trackers": false,
+    "last_updated": "2026-11-20 00:40:17"
+  },
+  "jagranjosh.com": {
+    "success_count": 2,
+    "failure_count": 0,
+    "avg_quality_score": 95.0,
+    "optimal_wait_ms": 1500,
+    "custom_headline_selector": "h1",
+    "block_trackers": false,
+    "last_updated": "2026-11-20 00:40:23"
+  },
+  "bhu.ac.in": {
+    "success_count": 1,
+    "failure_count": 0,
+    "avg_quality_score": 100.0,
+    "optimal_wait_ms": 1500,
+    "custom_headline_selector": "div",
+    "block_trackers": false,
+    "last_updated": "2026-11-20 00:39:23"
+  },
+  "ddnews.gov.in": {
+    "success_count": 1,
+    "failure_count": 0,
+    "avg_quality_score": 100.0,
+    "optimal_wait_ms": 1500,
+    "custom_headline_selector": "div",
+    "block_trackers": false,
+    "last_updated": "2026-11-20 00:39:28"
+  },
+  "youtube.com": {
+    "success_count": 5,
+    "failure_count": 0,
+    "avg_quality_score": 100.0,
+    "optimal_wait_ms": 1500,
+    "custom_headline_selector": "h1",
+    "block_trackers": false,
+    "last_updated": "2026-11-20 00:39:54"
+  },
+  "instagram.com": {
+    "success_count": 3,
+    "failure_count": 0,
+    "avg_quality_score": 100.0,
+    "optimal_wait_ms": 1500,
+    "custom_headline_selector": "h2",
+    "block_trackers": false,
+    "last_updated": "2026-11-20 00:40:06"
+  },
+  "news18.com": {
+    "success_count": 1,
+    "failure_count": 0,
+    "avg_quality_score": 100.0,
+    "optimal_wait_ms": 1500,
+    "custom_headline_selector": "h1",
+    "block_trackers": false,
+    "last_updated": "2026-11-20 00:40:20"
+  },
+  "uniindia.com": {
+    "success_count": 1,
+    "failure_count": 0,
+    "avg_quality_score": 85.0,
+    "optimal_wait_ms": 1500,
+    "custom_headline_selector": "div",
+    "block_trackers": false,
+    "last_updated": "2026-11-20 00:40:28"
+  },
+  "tamil.newsbytesapp.com": {
+    "success_count": 1,
+    "failure_count": 0,
+    "avg_quality_score": 100.0,
+    "optimal_wait_ms": 1500,
+    "custom_headline_selector": "h1",
+    "block_trackers": false,
+    "last_updated": "2026-11-20 01:07:47"
+  },
+  "hyderabadmail.com": {
+    "success_count": 1,
+    "failure_count": 0,
+    "avg_quality_score": 100.0,
+    "optimal_wait_ms": 1500,
+    "custom_headline_selector": "h1",
+    "block_trackers": false,
+    "last_updated": "2026-11-20 01:07:52"
+  },
+  "gktoday.in": {
+    "success_count": 1,
+    "failure_count": 0,
+    "avg_quality_score": 100.0,
+    "optimal_wait_ms": 1500,
+    "custom_headline_selector": "h1",
+    "block_trackers": false,
+    "last_updated": "2026-11-20 01:07:57"
+  },
+  "kts.cict.in": {
+    "success_count": 1,
+    "failure_count": 0,
+    "avg_quality_score": 100.0,
+    "optimal_wait_ms": 1500,
+    "custom_headline_selector": "div",
+    "block_trackers": false,
+    "last_updated": "2026-11-20 01:25:20"
+  },
+  "facebook.com": {
+    "success_count": 28,
+    "failure_count": 28,
+    "avg_quality_score": 91.1,
+    "optimal_wait_ms": 4000,
+    "custom_headline_selector": "h2",
+    "block_trackers": true,
+    "last_updated": "2026-11-20 03:14:58"
+  }
+}

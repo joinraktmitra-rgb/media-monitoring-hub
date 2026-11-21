@@ -22,8 +22,21 @@ import {
   downloadOfficialRegional,
   listOfficialRegional,
 } from "./providers/official-regional.ts";
+import {
+  downloadReadwhere,
+  listReadwhere,
+} from "./providers/readwhere.ts";
+import {
+  downloadJagranEdition,
+  listJagranCities,
+} from "./providers/dainik-jagran.ts";
+import {
+  downloadAmarUjalaEdition,
+  listAmarUjalaCities,
+} from "./providers/amar-ujala.ts";
 
-export type SourceOption = "auto" | "dailyepaper" | "indiags" | "official" | "all";
+export type SourceOption = "auto" | "dailyepaper" | "indiags" | "official" | "readwhere" | "all";
+export type TargetPreset = "financial" | "english" | "hindi" | "all";
 
 export interface ParsedCliArgs {
   command: string;
@@ -31,8 +44,135 @@ export interface ParsedCliArgs {
   flags: Record<string, string | boolean>;
 }
 
+export const TARGET_PRESETS: Record<TargetPreset, string[]> = {
+  financial: [
+    "economic-times",
+    "financial-express",
+    "business-standard",
+    "business-line",
+    "live-mint",
+  ],
+  english: [
+    "the-hindu",
+    "times-of-india",
+    "indian-express",
+    "hindustan-times",
+    "the-pioneer",
+    "the-tribune",
+    "the-telegraph",
+    "deccan-herald",
+    "the-free-press-journal",
+    "the-asian-age",
+    "statesman",
+    "deccan-chronicle",
+    "new-indian-express",
+    "morning-standard",
+    "millennium-post",
+    "daily-guardian",
+    "top-story",
+  ],
+  hindi: [
+    "dainik-jagran",
+    "amar-ujala",
+    "dainik-bhaskar",
+    "navbharat-times",
+    "hindustan",
+    "punjab-kesari",
+    "rajasthan-patrika",
+    "jansatta",
+    "prabhat-khabar",
+    "hari-bhoomi",
+    "naidunia",
+    "inext-live",
+    "navodaya-times",
+    "deshbandhu",
+    "vir-arjun",
+    "viraat-vaibhav",
+    "loksatya",
+    "action-india",
+    "shah-times",
+    "info-india",
+    "focus-news",
+    "aaj-samaj",
+    "dainik-tribune",
+    "dainik-savera",
+  ],
+  all: [
+    "economic-times",
+    "financial-express",
+    "business-standard",
+    "business-line",
+    "live-mint",
+    "the-hindu",
+    "times-of-india",
+    "indian-express",
+    "hindustan-times",
+    "the-pioneer",
+    "the-tribune",
+    "the-telegraph",
+    "deccan-herald",
+    "the-free-press-journal",
+    "the-asian-age",
+    "statesman",
+    "deccan-chronicle",
+    "new-indian-express",
+    "morning-standard",
+    "millennium-post",
+    "daily-guardian",
+    "top-story",
+    "dainik-jagran",
+    "amar-ujala",
+    "dainik-bhaskar",
+    "navbharat-times",
+    "hindustan",
+    "punjab-kesari",
+    "rajasthan-patrika",
+    "jansatta",
+    "prabhat-khabar",
+    "hari-bhoomi",
+    "naidunia",
+    "inext-live",
+    "navodaya-times",
+    "deshbandhu",
+    "vir-arjun",
+    "viraat-vaibhav",
+    "loksatya",
+    "action-india",
+    "shah-times",
+    "info-india",
+    "focus-news",
+    "aaj-samaj",
+    "dainik-tribune",
+    "dainik-savera",
+  ],
+};
+
 const INDIAGS_PREFERRED = new Set(["the-hindu", "hindu", "indian-express", "express", "business-line"]);
-const OFFICIAL_PREFERRED = new Set(["pragativadi", "andhra-prabha", "loktej", "dainik-janambhumi"]);
+const READWHERE_PREFERRED = new Set([
+  "new-indian-express",
+  "morning-standard",
+  "dainik-tribune",
+  "dainik-savera",
+]);
+const OFFICIAL_PREFERRED = new Set([
+  "pragativadi",
+  "andhra-prabha",
+  "loktej",
+  "dainik-janambhumi",
+  "millennium-post",
+  "daily-guardian",
+  "top-story",
+  "navodaya-times",
+  "deshbandhu",
+  "vir-arjun",
+  "viraat-vaibhav",
+  "loksatya",
+  "action-india",
+  "shah-times",
+  "info-india",
+  "focus-news",
+  "aaj-samaj",
+]);
 
 const PAPER_ALIASES: Record<string, string> = {
   hindu: "the-hindu",
@@ -45,8 +185,18 @@ const PAPER_ALIASES: Record<string, string> = {
   ht: "hindustan-times",
   dj: "dainik-jagran",
   db: "dainik-bhaskar",
+  au: "amar-ujala",
+  ujala: "amar-ujala",
+  "amar-ujala": "amar-ujala",
   nbt: "navbharat-times",
   mint: "live-mint",
+  nie: "new-indian-express",
+  "the-new-indian-express": "new-indian-express",
+  "the-morning-standard": "morning-standard",
+  "the-daily-guardian": "daily-guardian",
+  "the-statesman": "statesman",
+  "the-asian-age": "the-asian-age",
+  "asian-age": "the-asian-age",
 };
 
 function expandAlias(paper: string): string {
@@ -93,14 +243,15 @@ export function parseArgs(argv: string[]): ParsedCliArgs {
 }
 
 function printHelp(): void {
-  console.log(`epaper — Unified Indian Newspaper PDF CLI (indiags.com + dailyepaper.in + official)
+  console.log(`epaper — Unified Indian Newspaper PDF CLI (indiags.com + dailyepaper.in + official + readwhere)
 
 Usage:
   epaper <command> [args] [options]
 
 Commands:
   list                          List available newspapers
-    --source <all|dailyepaper|indiags|official>   Filter by provider (default: all)
+    --preset <financial|english|hindi|all>        Filter by target 44-newspaper preset
+    --source <all|dailyepaper|indiags|official|readwhere>  Filter by provider (default: all)
     --search <query>                              Filter by paper name or slug
     --json                                        Output JSON
 
@@ -109,13 +260,15 @@ Commands:
     --json                                        Output JSON
 
   download <paper>              Download latest (or --date) PDF
-    --source <auto|dailyepaper|indiags|official>  Provider selection (default: auto)
+    --source <auto|dailyepaper|indiags|official|readwhere> Provider selection (default: auto)
     --date <"DD Mon YYYY"|"YYYY-MM-DD">           Specific date (auto checks indiags/dailyepaper)
     --out <dir>                                   Output directory (default: ~/Downloads/epapers)
     --json                                        Output JSON
 
-  batch <p1,p2,...>             Download multiple papers in sequence
-    --source <auto|dailyepaper|indiags|official>  Provider selection (default: auto)
+  batch [p1,p2,...]             Download multiple papers in sequence
+    --preset <financial|english|hindi|all>        Download all papers in target preset
+    --source <auto|dailyepaper|indiags|official|readwhere> Provider selection (default: auto)
+    --date <"DD Mon YYYY"|"YYYY-MM-DD">           Specific date (for supported providers)
     --out <dir>                                   Output directory (default: ~/Downloads/epapers)
     --json                                        Output JSON
 
@@ -132,12 +285,12 @@ Commands:
     --json                                        Output JSON
 
 Examples:
-  epaper list --search hindu --json
-  epaper issues times-of-india --limit 5 --json
-  epaper download the-hindu --date "15 Nov 2026" --out ./epapers --json
-  epaper batch the-hindu,indian-express,toi,fe,pragativadi,loktej --out ./epapers --json
-  epaper render ./the-hindu-2026-11-15.pdf --pages 1 --grid --hints --out ./pages --json
-  epaper clip ./coords.json --out ./clips --json
+  epaper list --preset financial --json
+  epaper list --preset all
+  epaper batch --preset financial --out ./epapers --json
+  epaper batch the-hindu,indian-express,toi,fe,new-indian-express,shah-times --out ./epapers
+  epaper download new-indian-express --out ./epapers
+  epaper download shah-times --out ./epapers
 `);
 }
 
@@ -145,9 +298,52 @@ async function resolveDownload(
   paperInput: string,
   outDir: string,
   source: SourceOption,
-  date?: string
+  date?: string,
+  city?: string
 ): Promise<DownloadResult> {
   const paper = expandAlias(paperInput);
+  const normalized = paper.trim().toLowerCase();
+
+  // Dainik Jagran direct official regional adapter (supports 218 cities & date selection)
+  if (normalized === "dainik-jagran" || normalized === "dj" || normalized === "jagran") {
+    const res = await downloadJagranEdition({
+      city: city || "varanasi",
+      date,
+      outDir,
+    });
+    return {
+      source: "official" as any,
+      paper: `Dainik Jagran (${res.city})`,
+      date: res.date,
+      fileName: res.fileName,
+      filePath: res.filePath,
+      sizeBytes: res.sizeBytes,
+      sizeMB: res.sizeMB,
+    };
+  }
+
+  // Amar Ujala direct official HD adapter (supports 141 cities & signed 1600x2542 HD images)
+  if (normalized === "amar-ujala" || normalized === "au" || normalized === "amarujala") {
+    const res = await downloadAmarUjalaEdition({
+      city: city || "varanasi-city",
+      date,
+      outDir,
+    });
+    return {
+      source: "official" as any,
+      paper: `Amar Ujala (${res.city})`,
+      date: res.date,
+      fileName: res.fileName,
+      filePath: res.filePath,
+      sizeBytes: res.sizeBytes,
+      sizeMB: res.sizeMB,
+    };
+  }
+
+  if (source === "readwhere") {
+    return downloadReadwhere(paper, outDir);
+  }
+
   if (source === "official") {
     if (date) {
       throw new Error("--date is only supported with --source dailyepaper or --source auto.");
@@ -163,7 +359,19 @@ async function resolveDownload(
     return downloadDailyEpaper(paper, outDir, date);
   }
 
-  const normalized = paper.trim().toLowerCase();
+  // Auto mode routing: Readwhere preferred papers
+  if (READWHERE_PREFERRED.has(normalized)) {
+    try {
+      return await downloadReadwhere(paper, outDir);
+    } catch (readwhereErr) {
+      if (date) {
+        return downloadDailyEpaper(paper, outDir, date);
+      }
+      throw readwhereErr;
+    }
+  }
+
+  // Auto mode routing: Official preferred papers
   if (OFFICIAL_PREFERRED.has(normalized) && !date) {
     try {
       return await downloadOfficialRegional(paper, outDir);
@@ -171,6 +379,8 @@ async function resolveDownload(
       return downloadDailyEpaper(paper, outDir);
     }
   }
+
+  // Auto mode routing: IndiaGS preferred papers
   if (INDIAGS_PREFERRED.has(normalized)) {
     try {
       return await downloadIndiaGs(paper, outDir, date);
@@ -182,10 +392,10 @@ async function resolveDownload(
     }
   }
 
+  // Default fallback: dailyepaper -> indiags
   try {
     return await downloadDailyEpaper(paper, outDir, date);
   } catch (dailyErr) {
-    // Fallback to indiags if dailyepaper is Telegram-only/DMCA or missing the requested date
     try {
       return await downloadIndiaGs(paper, outDir, date);
     } catch {
@@ -198,8 +408,10 @@ async function runList(flags: Record<string, string | boolean>): Promise<void> {
   const source = String(flags.source || "all").toLowerCase();
   const search = typeof flags.search === "string" ? flags.search : undefined;
   const asJson = Boolean(flags.json);
+  const presetKey = typeof flags.preset === "string" ? flags.preset.trim().toLowerCase() : undefined;
 
   const results: Array<Record<string, unknown>> = [];
+
   if (source === "all" || source === "official") {
     const off = listOfficialRegional(search);
     results.push(
@@ -212,6 +424,18 @@ async function runList(flags: Record<string, string | boolean>): Promise<void> {
       }))
     );
   }
+  if (source === "all" || source === "readwhere") {
+    const rw = listReadwhere(search);
+    results.push(
+      ...rw.map((p) => ({
+        source: p.source,
+        slug: p.slug,
+        name: `${p.name} (${p.editionLabel})`,
+        date: "today",
+        ref: `${p.host}${p.editionPath}`,
+      }))
+    );
+  }
   if (source === "all" || source === "indiags") {
     const ig = await listIndiaGs(search);
     results.push(...ig.map((p) => ({ source: p.source, slug: p.slug, name: p.name, date: p.date, ref: p.bookUrl })));
@@ -221,15 +445,47 @@ async function runList(flags: Record<string, string | boolean>): Promise<void> {
     results.push(...de.map((p) => ({ source: p.source, slug: p.slug, name: p.name, date: "archive", ref: p.url })));
   }
 
+  let finalResults = results;
+  if (presetKey) {
+    if (!TARGET_PRESETS[presetKey as TargetPreset]) {
+      throw new Error(
+        `Unknown preset "${flags.preset}". Available presets: financial, english, hindi, all`
+      );
+    }
+    const allowedSlugs = new Set(TARGET_PRESETS[presetKey as TargetPreset]);
+    // Deduplicate per slug when filtering by preset
+    const seen = new Set<string>();
+    finalResults = [];
+    for (const r of results) {
+      const slug = String(r.slug);
+      if (allowedSlugs.has(slug) && !seen.has(slug)) {
+        seen.add(slug);
+        finalResults.push(r);
+      }
+    }
+  }
+
   if (asJson) {
-    console.log(JSON.stringify({ ok: true, count: results.length, papers: results }, null, 2));
+    console.log(
+      JSON.stringify(
+        {
+          ok: true,
+          preset: presetKey || null,
+          count: finalResults.length,
+          papers: finalResults,
+        },
+        null,
+        2
+      )
+    );
     return;
   }
 
-  console.log(`Found ${results.length} newspapers:\n`);
-  for (const r of results) {
+  const titlePrefix = presetKey ? `[Preset: ${presetKey.toUpperCase()}] ` : "";
+  console.log(`Found ${finalResults.length} ${titlePrefix}newspapers:\n`);
+  for (const r of finalResults) {
     console.log(
-      `${String(r.source).padEnd(12)} | ${String(r.slug).padEnd(28)} | ${String(r.name).padEnd(28)} | ${r.date}`
+      `${String(r.source).padEnd(12)} | ${String(r.slug).padEnd(28)} | ${String(r.name).padEnd(32)} | ${r.date}`
     );
   }
 }
@@ -269,12 +525,13 @@ async function runDownload(
   }
   const source = String(flags.source || "auto").toLowerCase() as SourceOption;
   const date = typeof flags.date === "string" ? flags.date : undefined;
+  const city = typeof flags.city === "string" ? flags.city : (typeof flags.edition === "string" ? flags.edition : undefined);
   const outDir = path.resolve(
     typeof flags.out === "string" ? flags.out : path.join(os.homedir(), "Downloads", "epapers")
   );
   const asJson = Boolean(flags.json);
 
-  const result = await resolveDownload(paper, outDir, source, date);
+  const result = await resolveDownload(paper, outDir, source, date, city);
   if (asJson) {
     console.log(JSON.stringify({ ok: true, ...result }, null, 2));
     return;
@@ -288,17 +545,35 @@ async function runBatch(
   positionals: string[],
   flags: Record<string, string | boolean>
 ): Promise<void> {
-  const rawList = positionals.join(",");
-  const papers = rawList
-    .split(",")
-    .map((s) => s.trim())
-    .filter(Boolean);
+  let papers: string[] = [];
+
+  if (flags.preset && typeof flags.preset === "string") {
+    const presetKey = flags.preset.trim().toLowerCase() as TargetPreset;
+    if (TARGET_PRESETS[presetKey]) {
+      papers = [...TARGET_PRESETS[presetKey]];
+    } else {
+      throw new Error(`Unknown preset "${flags.preset}". Available presets: financial, english, hindi, all`);
+    }
+  } else {
+    const rawList = positionals.join(",");
+    papers = rawList
+      .split(",")
+      .map((s) => s.trim())
+      .filter(Boolean);
+  }
 
   if (papers.length === 0) {
-    throw new Error("Missing papers list. Example: batch the-hindu,indian-express,times-of-india");
+    throw new Error("Missing papers list or --preset. Example: batch --preset financial OR batch the-hindu,indian-express");
   }
 
   const source = String(flags.source || "auto").toLowerCase() as SourceOption;
+  const date = typeof flags.date === "string" ? flags.date : undefined;
+  const city =
+    typeof flags.city === "string"
+      ? flags.city
+      : typeof flags.edition === "string"
+        ? flags.edition
+        : undefined;
   const outDir = path.resolve(
     typeof flags.out === "string" ? flags.out : path.join(os.homedir(), "Downloads", "epapers")
   );
@@ -309,7 +584,7 @@ async function runBatch(
 
   for (const paper of papers) {
     try {
-      const res = await resolveDownload(paper, outDir, source);
+      const res = await resolveDownload(paper, outDir, source, date, city);
       downloaded.push(res);
       if (!asJson) {
         console.log(`OK   [${res.source}] ${res.paper} -> ${res.fileName} (${res.sizeMB} MB)`);

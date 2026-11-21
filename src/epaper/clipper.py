@@ -200,15 +200,16 @@ def snap_horizontal_edge(gray: np.ndarray, y_approx: int, x0: int, x1: int, win:
     row_mean = band.mean(axis=1)
     white_ratio = (band > 245).mean(axis=1)
 
-    # Prefer solid dark divider line if present (mean < 120) or cleanest white row
+    # Prefer clean white gutter separator row first if present (avoids cutting into headline text/shirorekha)
+    white_rows = np.where(white_ratio >= 0.90)[0]
+    if len(white_rows) > 0:
+        closest = white_rows[int(np.argmin(np.abs((lo + white_rows) - y_approx)))]
+        return lo + int(closest)
+
+    # Otherwise fallback to solid dark divider line if present
     dark_rows = np.where(row_mean < 120)[0]
     if len(dark_rows) > 0:
         closest = dark_rows[int(np.argmin(np.abs((lo + dark_rows) - y_approx)))]
-        return lo + int(closest)
-
-    white_rows = np.where(white_ratio >= 0.94)[0]
-    if len(white_rows) > 0:
-        closest = white_rows[int(np.argmin(np.abs((lo + white_rows) - y_approx)))]
         return lo + int(closest)
 
     return lo + int(np.argmax(row_mean))

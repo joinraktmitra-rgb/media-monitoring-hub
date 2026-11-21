@@ -1,13 +1,15 @@
 #!/usr/bin/env python3
 """
-Ampio Labs — Advanced Online, YouTube & Instagram Media Monitoring Engine.
-Strict Last 24 Hours Discovery:
-  1. YouTube: Filtered for 'Today' (sp=EgIIAg%253D%253D) via yt-dlp.
-     Downloads crisp original creator video thumbnails (JPG) — NOT player screenshots.
-  2. Instagram: Scans hashtags, keywords & official handles (@eduminofindia, @ktsangamam) via logged-in Chrome session.
-     Parses <time datetime="..."> to strictly enforce <= 24h filter and captures clean post screenshots.
-  3. Google News: Queries with date-sort (tbm=nws&tbs=qdr:d,sbd:1) for past 24h web coverage.
-  4. Database: Persists all verified items into data/media_dataset.db.
+Ampio Labs — Advanced 48-Hour Multi-Channel Media Monitoring Engine.
+Strict 48-Hour Window (17-Nov-2026 & 18-Nov-2026):
+  1. YouTube: Exhaustive search across English, Hindi, and Tamil keywords via yt-dlp.
+     Downloads original crisp creator video thumbnails (JPG) — NOT player screenshots.
+     No limits — ingests all relevant videos.
+  2. Instagram: Scans official handles (@eduminofindia) and tags via real Chrome browser.
+     Parses <time datetime="..."> to enforce the 48-hour window and captures clean screenshots.
+  3. Google News & Blogs: Queries past 48h sorted by date (tbm=nws&tbs=qdr:d2,sbd:1) across
+     multiple language queries. Captures clean desktop web screenshots for each article.
+  4. SQLite Database: Ingests all verified items with complete metadata into data/media_dataset.db.
 """
 
 import argparse
@@ -52,71 +54,83 @@ def run_browse_code(js_code: str) -> dict:
 
 
 # ==============================================================================
-# 1. YOUTUBE LAST 24 HOURS (yt-dlp + Direct High-Res Thumbnails)
+# 1. YOUTUBE 48-HOUR ENGINE (yt-dlp + High-Res Thumbnails — No Limits)
 # ==============================================================================
-def search_youtube_today(query: str, limit: int = 6) -> list[dict]:
+def search_youtube_48h(keywords: list[str]) -> list[dict]:
     """
-    Search YouTube videos uploaded in the LAST 24 HOURS using yt-dlp
-    with YouTube's native 'Today' filter (sp=EgIIAg%253D%253D).
-    Extracts high-resolution JPG thumbnails directly from YouTube CDN.
+    Search YouTube videos uploaded in the past 48 hours using yt-dlp across multiple keywords.
+    Downloads crisp original creator video thumbnails (JPG) directly from YouTube CDN.
     """
-    print(f"\n🎥 [1/3] Searching YouTube for last 24h coverage of: '{query}'...")
+    print(f"\n🎥 [1/3] Searching YouTube (Past 48h, No Limit) across {len(keywords)} keyword(s)...")
     os.makedirs("clips/youtube", exist_ok=True)
 
-    encoded_query = urllib.parse.quote_plus(query)
-    today_search_url = f"https://www.youtube.com/results?search_query={encoded_query}&sp=EgIIAg%253D%253D"
+    all_raw_videos = {}
 
-    # Step A: Get video list using yt-dlp flat-playlist
-    try:
-        proc = subprocess.run(
-            [
-                "uv", "run", "--with", "yt-dlp", "yt-dlp",
-                today_search_url,
-                "--flat-playlist",
-                "--dump-json"
-            ],
-            capture_output=True,
-            text=True,
-            timeout=45,
-        )
-        if proc.returncode != 0:
-            print(f"[WARN] yt-dlp search stderr: {proc.stderr}")
-            return []
+    for kw in keywords:
+        print(f"  -> Querying YouTube for: '{kw}'...")
+        encoded = urllib.parse.quote_plus(kw)
+        urls_to_try = [
+            f"https://www.youtube.com/results?search_query={encoded}&sp=CAISAhAB",  # Sort by upload date
+            f"https://www.youtube.com/results?search_query={encoded}&sp=EgIIAg%253D%253D",  # Today
+            f"ytsearch25:{kw}"
+        ]
 
-        raw_videos = []
-        seen_ids = set()
-        for line in proc.stdout.splitlines():
-            line = line.strip()
-            if not line:
-                continue
+        for target in urls_to_try:
             try:
-                d = json.loads(line)
-                vid_id = d.get("id") or (d.get("url", "").split("v=")[-1] if "v=" in d.get("url", "") else "")
-                if vid_id and vid_id not in seen_ids:
-                    seen_ids.add(vid_id)
-                    raw_videos.append({
-                        "id": vid_id,
-                        "title": d.get("title", "YouTube Video"),
-                        "channel": d.get("channel") or d.get("uploader") or "YouTube Creator",
-                        "url": f"https://www.youtube.com/watch?v={vid_id}"
-                    })
-            except Exception:
-                continue
+                proc = subprocess.run(
+                    [
+                        "uv", "run", "--with", "yt-dlp", "yt-dlp",
+                        target,
+                        "--flat-playlist",
+                        "--dateafter", "20261116",
+                        "--dump-json"
+                    ],
+                    capture_output=True,
+                    text=True,
+                    timeout=35,
+                )
+                if proc.returncode != 0:
+                    continue
 
-        videos_to_process = raw_videos[:limit]
-        print(f"  -> Discovered {len(videos_to_process)} video(s) uploaded in last 24h on YouTube.")
+                for line in proc.stdout.splitlines():
+                    line = line.strip()
+                    if not line:
+                        continue
+                    try:
+                        d = json.loads(line)
+                        vid_id = d.get("id") or (d.get("url", "").split("v=")[-1] if "v=" in d.get("url", "") else "")
+                        title = d.get("title", "")
+                        title_lower = title.lower()
+                        up_date = d.get("upload_date") or ""
+                        # Only accept if within 48-hour window (20261117 or 20261118) or if upload_date not available, candidate
+                        if up_date and up_date not in ["20261117", "20261118"]:
+                            continue
+                        if vid_id and any(tok in title_lower for tok in ["kashi", "sangam", "kts", "काशी", "तमिल", "காசி", "சங்கமம்"]):
+                            if vid_id not in all_raw_videos:
+                                all_raw_videos[vid_id] = {
+                                    "id": vid_id,
+                                    "title": title,
+                                    "channel": d.get("channel") or d.get("uploader") or "YouTube Creator",
+                                    "url": f"https://www.youtube.com/watch?v={vid_id}",
+                                    "upload_date": up_date
+                                }
+                    except Exception:
+                        continue
+            except Exception as e:
+                print(f"      [WARN] yt-dlp query failed for {target}: {e}")
 
-        # Step B: Download clean creator thumbnails (JPG) using yt-dlp
-        verified_videos = []
-        for idx, vid in enumerate(videos_to_process):
-            vid_id = vid["id"]
-            thumb_dest_pattern = f"/Users/piyushpal/Downloads/media/clips/youtube/{vid_id}"
-            expected_jpg = f"/Users/piyushpal/Downloads/media/clips/youtube/{vid_id}.jpg"
-            expected_webp = f"/Users/piyushpal/Downloads/media/clips/youtube/{vid_id}.webp"
+    print(f"  -> Discovered {len(all_raw_videos)} candidate video(s) covering KTS in last 48h.")
 
-            print(f"  [{idx+1}/{len(videos_to_process)}] Downloading thumbnail for: [{vid['channel']}] {vid['title'][:55]}...")
+    verified_videos = []
+    for idx, (vid_id, vid) in enumerate(all_raw_videos.items()):
+        thumb_dest_pattern = f"/Users/piyushpal/Downloads/media/clips/youtube/{vid_id}"
+        expected_jpg = f"/Users/piyushpal/Downloads/media/clips/youtube/{vid_id}.jpg"
+        expected_webp = f"/Users/piyushpal/Downloads/media/clips/youtube/{vid_id}.webp"
+
+        if not (os.path.exists(expected_jpg) and os.path.getsize(expected_jpg) > 1000):
+            print(f"  [{idx+1}/{len(all_raw_videos)}] Downloading thumbnail: [{vid['channel']}] {vid['title'][:50]}...")
             try:
-                dl_proc = subprocess.run(
+                subprocess.run(
                     [
                         "uv", "run", "--with", "yt-dlp", "--with", "pillow", "yt-dlp",
                         vid["url"],
@@ -131,69 +145,77 @@ def search_youtube_today(query: str, limit: int = 6) -> list[dict]:
                     timeout=20,
                 )
             except Exception as e:
-                print(f"      [WARN] yt-dlp thumbnail download timed out for {vid_id}: {e}")
+                print(f"      [WARN] Thumbnail download failed for {vid_id}: {e}")
 
-            # Determine thumbnail path
-            final_thumb_path = ""
-            if os.path.exists(expected_jpg) and os.path.getsize(expected_jpg) > 1000:
-                final_thumb_path = expected_jpg
-            elif os.path.exists(expected_webp) and os.path.getsize(expected_webp) > 1000:
-                final_thumb_path = expected_webp
+        # Convert webp to jpg if only webp exists
+        if not (os.path.exists(expected_jpg) and os.path.getsize(expected_jpg) > 1000) and os.path.exists(expected_webp):
+            try:
+                from PIL import Image
+                im = Image.open(expected_webp).convert("RGB")
+                im.save(expected_jpg, "JPEG", quality=95)
+            except Exception:
+                pass
 
-            if final_thumb_path:
-                print(f"      ✓ High-res thumbnail saved: {os.path.basename(final_thumb_path)} ({os.path.getsize(final_thumb_path)//1024} KB)")
-                vid["clip_path"] = final_thumb_path
-                vid["headline"] = vid["title"]
-                vid["publication"] = f"YouTube ({vid['channel']})"
-                vid["date"] = datetime.now().strftime("%d-%m-%Y")
-                vid["major_category"] = "Online Coverage"
-                vid["sentiment"] = "Positive"
-                verified_videos.append(vid)
-            else:
-                print(f"      ⚠️ Failed to download thumbnail for {vid['url']}")
+        final_thumb_path = ""
+        if os.path.exists(expected_jpg) and os.path.getsize(expected_jpg) > 1000:
+            final_thumb_path = expected_jpg
+        elif os.path.exists(expected_webp) and os.path.getsize(expected_webp) > 1000:
+            final_thumb_path = expected_webp
 
-        return verified_videos
-    except Exception as e:
-        print(f"[ERROR] Failed in YouTube search: {e}")
-        return []
+        if final_thumb_path:
+            up_d = vid.get("upload_date")
+            date_str = "17-11-2026" if up_d == "20261117" else "18-11-2026"
+            vid["clip_path"] = final_thumb_path
+            vid["headline"] = vid["title"]
+            vid["publication"] = f"YouTube ({vid['channel']})"
+            vid["date"] = date_str
+            vid["major_category"] = "Online Coverage"
+            vid["sentiment"] = "Positive"
+            verified_videos.append(vid)
+
+    print(f"  -> Successfully verified and downloaded thumbnails for {len(verified_videos)} YouTube video(s).")
+    return verified_videos
 
 
 # ==============================================================================
-# 2. INSTAGRAM LAST 24 HOURS (Strict Time Check & Post Screenshots)
+# 2. INSTAGRAM 48-HOUR ENGINE (Strict Time Check & Post Screenshots)
 # ==============================================================================
-def search_instagram_last_24h(query: str, limit: int = 5) -> list[dict]:
+def search_instagram_48h(keywords: list[str]) -> list[dict]:
     """
-    Search Instagram for target keyword/hashtag in the LAST 24 HOURS.
-    Uses real authenticated Chrome browser session.
-    Parses <time datetime="..."> on each post to strictly enforce the <= 24 hours window.
+    Search Instagram for target handles and hashtags across the 48-hour window.
+    Parses <time datetime="..."> on each post to strictly enforce the 48h limit.
     """
-    print(f"\n📸 [2/3] Checking Instagram for last 24h posts covering: '{query}'...")
+    print(f"\n📸 [2/3] Checking Instagram for past 48h posts covering KTS...")
     os.makedirs("clips/instagram", exist_ok=True)
 
-    # Step A: Collect candidate links from tag explore & official handle
-    clean_tag = query.replace(" ", "").replace(".", "")
-    js_gather = f"""
+    js_gather = """
     const candidateUrls = new Set();
     
-    // Check official handle first
-    try {{
-      await page.goto("https://www.instagram.com/eduminofindia/", {{ waitUntil: "domcontentloaded", timeout: 20000 }});
-      await page.waitForTimeout(3000);
-      const links = await page.evaluate(() => {{
-        return Array.from(document.querySelectorAll('a[href*="/p/"], a[href*="/reel/"]')).slice(0, 8).map(a => a.href);
-      }});
-      links.forEach(l => candidateUrls.add(l));
-    }} catch (e) {{}}
+    // 1. Check official handles
+    const handles = ["eduminofindia", "ktsangamam"];
+    for (const h of handles) {
+      try {
+        await page.goto("https://www.instagram.com/" + h + "/", { waitUntil: "domcontentloaded", timeout: 15000 });
+        await page.waitForTimeout(2500);
+        const links = await page.evaluate(() => {
+          return Array.from(document.querySelectorAll('a[href*="/p/"], a[href*="/reel/"]')).slice(0, 10).map(a => a.href);
+        });
+        links.forEach(l => candidateUrls.add(l));
+      } catch (e) {}
+    }
 
-    // Check tag explore
-    try {{
-      await page.goto("https://www.instagram.com/explore/tags/{clean_tag}/", {{ waitUntil: "domcontentloaded", timeout: 20000 }});
-      await page.waitForTimeout(3000);
-      const tagLinks = await page.evaluate(() => {{
-        return Array.from(document.querySelectorAll('a[href*="/p/"], a[href*="/reel/"]')).slice(0, 8).map(a => a.href);
-      }});
-      tagLinks.forEach(l => candidateUrls.add(l));
-    }} catch (e) {{}}
+    // 2. Check tags
+    const tags = ["kashitamilsangamam", "kts5"];
+    for (const t of tags) {
+      try {
+        await page.goto("https://www.instagram.com/explore/tags/" + t + "/", { waitUntil: "domcontentloaded", timeout: 15000 });
+        await page.waitForTimeout(2500);
+        const tagLinks = await page.evaluate(() => {
+          return Array.from(document.querySelectorAll('a[href*="/p/"], a[href*="/reel/"]')).slice(0, 8).map(a => a.href);
+        });
+        tagLinks.forEach(l => candidateUrls.add(l));
+      } catch (e) {}
+    }
 
     await page.close();
     return Array.from(candidateUrls);
@@ -201,18 +223,14 @@ def search_instagram_last_24h(query: str, limit: int = 5) -> list[dict]:
 
     res = run_browse_code(js_gather)
     candidate_links = res if isinstance(res, list) else []
-    print(f"  -> Found {len(candidate_links)} candidate Instagram posts/reels. Evaluating timestamps...")
+    print(f"  -> Discovered {len(candidate_links)} candidate Instagram posts/reels. Evaluating timestamps...")
 
     verified_posts = []
     now_utc = datetime.now(timezone.utc)
 
-    # Step B: Inspect each candidate post for strict 24h compliance & screenshot
     for idx, post_url in enumerate(candidate_links):
-        if len(verified_posts) >= limit:
-            break
-
-        post_id = re.search(r"/(p|reel)/([^/]+)/", post_url)
-        slug_id = post_id.group(2) if post_id else f"insta_{idx+1}"
+        post_match = re.search(r"/(p|reel)/([^/]+)/", post_url)
+        slug_id = post_match.group(2) if post_match else f"insta_{idx+1}"
         out_screenshot = f"/Users/piyushpal/Downloads/media/clips/instagram/{slug_id}.png"
 
         js_inspect = f"""
@@ -220,26 +238,23 @@ def search_instagram_last_24h(query: str, limit: int = 5) -> list[dict]:
         const outPath = {json.dumps(out_screenshot)};
 
         try {{
-          await page.goto(postUrl, {{ waitUntil: "domcontentloaded", timeout: 25000 }});
-          await page.waitForTimeout(3000);
+          await page.goto(postUrl, {{ waitUntil: "domcontentloaded", timeout: 20000 }});
+          await page.waitForTimeout(2500);
 
           const data = await page.evaluate(() => {{
             const timeEl = document.querySelector('time');
             const dt = timeEl ? timeEl.getAttribute('datetime') : null;
             const timeText = timeEl ? timeEl.innerText : null;
             
-            // Header / Author
             const authorEl = document.querySelector('header a, h2 a, span a');
             const author = authorEl ? authorEl.innerText.trim() : "Instagram Creator";
 
-            // Caption
             const h1 = document.querySelector('h1');
             const caption = h1 ? h1.innerText.trim() : "";
 
             return {{ dt, timeText, author, caption }};
           }});
 
-          // Only take screenshot if element loaded
           if (data && data.dt) {{
             await page.screenshot({{ path: outPath }});
           }}
@@ -255,129 +270,140 @@ def search_instagram_last_24h(query: str, limit: int = 5) -> list[dict]:
 
         dt_str = inspect_res.get("dt")
         try:
-            # Parse ISO 8601
             dt_clean = dt_str.replace("Z", "+00:00")
             post_dt = datetime.fromisoformat(dt_clean)
             diff_hours = (now_utc - post_dt).total_seconds() / 3600.0
 
-            time_text = inspect_res.get("timeText", "")
             author = inspect_res.get("author", "Instagram Creator")
             caption = inspect_res.get("caption", "")
 
-            # Strict 24-hour verification
-            if diff_hours <= 28:  # generous 28h buffer for timezone variances
+            # Strict 48-hour verification (with generous 58h buffer for timezone variances)
+            if diff_hours <= 58:
                 headline = caption[:90] if caption else f"Instagram Coverage by @{author}"
+                date_str = "18-11-2026" if diff_hours <= 26 else "17-11-2026"
                 if os.path.exists(out_screenshot) and os.path.getsize(out_screenshot) > 1000:
-                    print(f"  ✓ [{author}] Verified ({int(diff_hours)}h ago): {headline[:50]}...")
+                    print(f"  ✓ [{author}] Verified ({int(diff_hours)}h ago, {date_str}): {headline[:50]}...")
                     verified_posts.append({
                         "headline": headline,
                         "url": post_url,
                         "publication": f"Instagram (@{author})",
-                        "date": datetime.now().strftime("%d-%m-%Y"),
+                        "date": date_str,
                         "clip_path": out_screenshot,
                         "major_category": "Online Coverage",
                         "sentiment": "Positive"
                     })
             else:
-                print(f"  ⏭️ Skipped [{author}]: Posted {int(diff_hours)}h ago (older than 24h)")
-        except Exception as e:
+                print(f"  ⏭️ Skipped [{author}]: Posted {int(diff_hours)}h ago (older than 48h)")
+        except Exception:
             continue
 
-    print(f"  -> Extracted {len(verified_posts)} verified Instagram post(s) from the last 24 hours.")
+    print(f"  -> Extracted {len(verified_posts)} verified Instagram post(s) from the 48-hour window.")
     return verified_posts
 
 
 # ==============================================================================
-# 3. GOOGLE NEWS LAST 24 HOURS (Sort Date: tbs=qdr:d,sbd:1)
+# 3. GOOGLE NEWS & BLOGS 48-HOUR ENGINE (Sort Date: tbs=qdr:d2,sbd:1)
 # ==============================================================================
-def search_google_news_24h(query: str, limit: int = 6) -> list[dict]:
-    """Search Google News sorted by date for the past 24 hours."""
-    print(f"\n📰 [3/3] Searching Google News (Past 24h, Date Sorted) for: '{query}'...")
+def search_google_news_48h(queries: list[str]) -> list[dict]:
+    """
+    Search Google News and blogs sorted by date for the past 48 hours.
+    Captures desktop screenshots for all discovered articles.
+    """
+    print(f"\n📰 [3/3] Searching Google News & Blogs (Past 48h, Date-Sorted) across {len(queries)} query/queries...")
     os.makedirs("clips/online", exist_ok=True)
 
-    js = f"""
-    const query = {json.dumps(query)};
-    const searchUrl = `https://www.google.com/search?q=${{encodeURIComponent(query)}}&tbm=nws&tbs=qdr:d,sbd:1`;
-    await page.goto(searchUrl, {{ waitUntil: "domcontentloaded" }});
-    await page.waitForTimeout(2500);
+    all_articles = {}
 
-    const items = await page.evaluate(() => {{
-      const anchors = Array.from(document.querySelectorAll('a'));
-      const list = [];
-      for (const a of anchors) {{
-        const heading = a.querySelector('div[role="heading"]');
-        if (heading && a.href) {{
-          const card = a.closest('div.SoaBEf') || a.parentElement;
-          const sourceEl = card ? card.querySelector('.NUnG9d span, .CEMjEf span, .MgUUmf span') : null;
-          const timeEl = card ? card.querySelector('.OSrXXb span, .S1FAPd, .rbYSKb') : null;
-          
-          list.push({{
-            headline: heading.innerText.trim(),
-            url: a.href,
-            publication: sourceEl ? sourceEl.innerText.trim() : "Online News",
-            date_rel: timeEl ? timeEl.innerText.trim() : "Past 24h"
-          }});
-        }}
-      }}
-      return list;
-    }});
+    for q in queries:
+        print(f"  -> Searching News & Blogs for: '{q}'...")
+        js_search = f"""
+        const query = {json.dumps(q)};
+        const searchUrl = "https://www.google.com/search?q=" + encodeURIComponent(query) + "&tbm=nws&tbs=qdr:d2,sbd:1";
+        await page.goto(searchUrl, {{ waitUntil: "domcontentloaded", timeout: 25000 }});
+        await page.waitForTimeout(2500);
 
-    await page.close();
-    return items;
-    """
+        const items = await page.evaluate(() => {{
+          const anchors = Array.from(document.querySelectorAll('a'));
+          const list = [];
+          for (const a of anchors) {{
+            const heading = a.querySelector('div[role="heading"]');
+            if (heading && a.href && !a.href.includes('google.com')) {{
+              const card = a.closest('div.SoaBEf') || a.parentElement;
+              const sourceEl = card ? card.querySelector('.NUnG9d span, .CEMjEf span, .MgUUmf span') : null;
+              const timeEl = card ? card.querySelector('.OSrXXb span, .S1FAPd, .rbYSKb') : null;
+              
+              list.push({{
+                headline: heading.innerText.trim(),
+                url: a.href,
+                publication: sourceEl ? sourceEl.innerText.trim() : "Online News",
+                date_rel: timeEl ? timeEl.innerText.trim() : "Past 48h"
+              }});
+            }}
+          }}
+          return list;
+        }});
 
-    res = run_browse_code(js)
-    raw_articles = res if isinstance(res, list) else []
-    print(f"  -> Discovered {len(raw_articles)} web news articles from past 24h.")
-
-    articles_to_capture = raw_articles[:limit]
-    captured_articles = []
-
-    for idx, art in enumerate(articles_to_capture):
-        pub_clean = re.sub(r"[^a-zA-Z0-9_-]", "_", art.get("publication", "news"))[:15]
-        out_shot = f"/Users/piyushpal/Downloads/media/clips/online/{idx+1:02d}_{pub_clean}.png"
-
-        print(f"  [{idx+1}/{len(articles_to_capture)}] Capturing desktop screenshot for: [{art['publication']}] {art['headline'][:50]}...")
-        js_cap = f"""
-        const url = {json.dumps(art["url"])};
-        const outPath = {json.dumps(out_shot)};
-
-        try {{
-          await page.goto(url, {{ waitUntil: "domcontentloaded", timeout: 25000 }});
-          await page.waitForTimeout(3000);
-          
-          // Dismiss cookie banners/modals
-          await page.evaluate(() => {{
-            const btns = document.querySelectorAll('button[id*="accept"], button[class*="cookie"], .modal-close');
-            btns.forEach(b => b.click());
-          }});
-
-          await page.screenshot({{ path: outPath }});
-        }} finally {{
-          await page.close();
-        }}
-        return {{ ok: true }};
+        await page.close();
+        return items;
         """
-        run_browse_code(js_cap)
 
-        if os.path.exists(out_shot) and os.path.getsize(out_shot) > 1000:
-            print(f"      ✓ Screenshot: {os.path.basename(out_shot)} ({os.path.getsize(out_shot)//1024} KB)")
-            art["clip_path"] = out_shot
-            art["date"] = datetime.now().strftime("%d-%m-%Y")
-            art["major_category"] = "Online Coverage"
-            art["sentiment"] = "Positive"
-            captured_articles.append(art)
-        else:
-            print(f"      ⚠️ Could not capture screenshot for: {art['url']}")
+        res = run_browse_code(js_search)
+        if isinstance(res, list):
+            for art in res:
+                u = art.get("url")
+                if u and u not in all_articles:
+                    all_articles[u] = art
+
+    print(f"  -> Discovered {len(all_articles)} unique online articles/blogs from the past 48 hours.")
+
+    # Capture screenshots with automated EvidenceScreenshotEngine
+    captured_articles = []
+    if all_articles:
+        try:
+            # Add scripts directory to path if needed
+            sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+            from capture_evidence_screenshots import EvidenceScreenshotEngine
+            from playwright.sync_api import sync_playwright
+
+            engine = EvidenceScreenshotEngine(
+                viewport_width=1440,
+                viewport_height=900,
+                output_dir="clips/online"
+            )
+            with sync_playwright() as p:
+                browser = engine._create_browser(p)
+                for idx, (url, art) in enumerate(all_articles.items()):
+                    pub = art.get("publication", "News")
+                    hl = art.get("headline", "")
+                    slug = f"{idx+1:02d}_{re.sub(r'[^a-zA-Z0-9_-]', '_', pub)[:15]}"
+                    print(f"  [{idx+1}/{len(all_articles)}] Capturing desktop screenshot: [{pub}] {hl[:45]}...")
+                    res = engine.capture_single(browser, url, headline=hl, publication=pub, slug=slug)
+                    if res.status in ("VERIFIED_CLEAN", "RETRIED_REPAIRED"):
+                        sz_kb = res.file_size_bytes // 1024
+                        print(f"      ✓ Screenshot: {os.path.basename(res.output_path)} ({sz_kb} KB) | Score: {res.quality_score}/100")
+                        date_rel = art.get("date_rel", "").lower()
+                        date_str = "18-11-2026"
+                        if any(x in date_rel for x in ["1 day ago", "yesterday", "2 days ago", "17 nov"]):
+                            date_str = "17-11-2026"
+                        art["clip_path"] = res.output_path
+                        art["date"] = date_str
+                        art["major_category"] = "Online Coverage"
+                        art["sentiment"] = "Positive"
+                        captured_articles.append(art)
+                    else:
+                        print(f"      ⚠️ Screenshot failed/unreachable for: {url} ({res.error})")
+                browser.close()
+        except Exception as e:
+            print(f"[WARN] EvidenceScreenshotEngine execution failed: {e}")
 
     return captured_articles
 
 
 # ==============================================================================
-# PERSISTENCE INTO SQLITE DATABASE
+# PERSISTENCE & DATABASE SYNCHRONIZATION
 # ==============================================================================
-def save_media_items(items: list[dict], db_path: str = "data/media_dataset.db"):
-    """Save all verified items into database with clean schema."""
+def sync_to_database(items: list[dict], db_path: str = "data/media_dataset.db"):
+    """Synchronize all verified print, online, and social items into SQLite database."""
     if not items:
         return
 
@@ -402,64 +428,82 @@ def save_media_items(items: list[dict], db_path: str = "data/media_dataset.db"):
     """)
 
     inserted = 0
+    updated = 0
     for itm in items:
         headline = itm.get("headline", "").strip()
-        pub = itm.get("publication", "Media Channel")
+        pub = itm.get("publication", "Media Channel").strip()
         clip_path = itm.get("clip_path", "")
         url = itm.get("url", "")
         cat = itm.get("major_category", "Online Coverage")
-        date_str = itm.get("date", datetime.now().strftime("%d-%m-%Y"))
+        date_str = itm.get("date", "18-11-2026")
+        edition = itm.get("edition", "Online")
+        page_no = itm.get("page_number") or itm.get("page") or 1
 
         cursor.execute("SELECT id FROM clippings_metadata WHERE headline=? AND publication=?", (headline, pub))
-        if cursor.fetchone():
-            cursor.execute("UPDATE clippings_metadata SET clip_path=?, date=? WHERE headline=? AND publication=?", (clip_path, date_str, headline, pub))
-            continue
-
-        raw_str = json.dumps(itm, ensure_ascii=False)
-        cursor.execute("""
-            INSERT INTO clippings_metadata (headline, publication, edition, page_number, date, major_category, sentiment, clip_path, raw_json)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
-        """, (headline, pub, "Online", 1, date_str, cat, "Positive", clip_path, raw_str))
-        inserted += 1
+        row = cursor.fetchone()
+        if row:
+            cursor.execute("""
+                UPDATE clippings_metadata
+                SET clip_path=?, date=?, major_category=?, raw_json=?
+                WHERE id=?
+            """, (clip_path, date_str, cat, json.dumps(itm, ensure_ascii=False), row[0]))
+            updated += 1
+        else:
+            cursor.execute("""
+                INSERT INTO clippings_metadata (headline, publication, edition, page_number, date, major_category, sentiment, clip_path, raw_json)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+            """, (headline, pub, edition, page_no, date_str, cat, "Positive", clip_path, json.dumps(itm, ensure_ascii=False)))
+            inserted += 1
 
     conn.commit()
     conn.close()
-    print(f"\n💾 Successfully synchronized {len(items)} last-24h media item(s) into '{db_path}' (New inserted: {inserted})!")
+    print(f"\n💾 Database '{db_path}' updated: {inserted} newly inserted, {updated} updated.")
 
 
 def main():
-    parser = argparse.ArgumentParser(description="Strict 24h Multi-Media Monitoring Pipeline")
-    parser.add_argument("--query", default="Kashi Tamil Sangamam 5.0", help="Search keyword")
-    parser.add_argument("--yt-limit", type=int, default=5, help="Max YouTube videos from last 24h")
-    parser.add_argument("--insta-limit", type=int, default=4, help="Max Instagram posts from last 24h")
-    parser.add_argument("--news-limit", type=int, default=5, help="Max Google News articles from last 24h")
+    parser = argparse.ArgumentParser(description="Strict 48-Hour Multi-Channel Media Monitoring Engine")
     parser.add_argument("--db", default="data/media_dataset.db", help="SQLite database path")
     args = parser.parse_args()
 
     print("==================================================================")
-    print("🚀 AMPIO LABS — 24-HOUR MULTI-CHANNEL MEDIA MONITOR")
-    print(f"   Keyword: {args.query}")
-    print(f"   Window:  STRICT LAST 24 HOURS (YouTube + Instagram + Web)")
+    print("🚀 AMPIO LABS — 48-HOUR MULTI-CHANNEL MEDIA MONITORING ENGINE")
+    print("   Time Horizon: 17-Nov-2026 & 18-Nov-2026 (Past 48 Hours)")
+    print("   Target: Kashi Tamil Sangamam 5.0 (KTS 5.0 / काशी तमिल संगमम / காசி தமிழ் சங்கமம்)")
+    print("   Scope: Online News, Blogs, YouTube, Instagram — NO LIMITS")
     print("==================================================================")
 
-    # 1. YouTube 24h (Thumbnails via yt-dlp)
-    yt_items = search_youtube_today(args.query, args.yt_limit)
+    keywords = [
+        "Kashi Tamil Sangamam 5.0",
+        "Kashi Tamil Sangamam",
+        "काशी तमिल संगमम",
+        "காசி தமிழ் சங்கமம்",
+    ]
 
-    # 2. Instagram 24h (Logged-in profile, timestamp verified <= 24h)
-    insta_items = search_instagram_last_24h(args.query, args.insta_limit)
+    # 1. YouTube 48h
+    yt_items = search_youtube_48h(keywords)
 
-    # 3. Google News 24h (Date sorted, desktop screenshots)
-    news_items = search_google_news_24h(args.query, args.news_limit)
+    # 2. Instagram 48h
+    insta_items = search_instagram_48h(keywords)
 
-    all_items = yt_items + insta_items + news_items
-    print(f"\n🎯 Total Verified Last-24h Items: {len(all_items)}")
+    # 3. Google News & Blogs 48h
+    news_queries = [
+        "Kashi Tamil Sangamam 5.0",
+        "Kashi Tamil Sangamam",
+        "काशी तमिल संगमम",
+        "காசி தமிழ் சங்கமம்",
+        "Kashi Tamil Sangamam special trains"
+    ]
+    news_items = search_google_news_48h(news_queries)
+
+    all_online_items = yt_items + insta_items + news_items
+    print(f"\n🎯 Total Verified 48-Hour Digital Items: {len(all_online_items)}")
     print(f"   - YouTube Channels: {len(yt_items)}")
     print(f"   - Instagram Posts:  {len(insta_items)}")
-    print(f"   - Web News Outlets: {len(news_items)}")
+    print(f"   - Web News & Blogs: {len(news_items)}")
 
-    save_media_items(all_items, args.db)
+    sync_to_database(all_online_items, args.db)
 
-    print("\n✅ Multi-channel extraction finished! Next step: generate client report with 'bun run report'.")
+    print("\n✅ 48-Hour ingestion finished! Next step: compile Word dossier and dashboard.")
 
 
 if __name__ == "__main__":
